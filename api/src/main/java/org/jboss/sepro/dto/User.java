@@ -21,7 +21,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
-@XmlRootElement
+@XmlRootElement(name = "user", namespace = "http://sepro.jboss.org")
 public class User implements Serializable {
 
     private String username;

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.sepro.interceptor;
+package org.jboss.sepro.service.rest.interceptor;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -23,7 +23,6 @@ import java.util.StringTokenizer;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.WebApplicationException;
@@ -39,10 +38,10 @@ import org.jboss.resteasy.spi.Failure;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import org.jboss.resteasy.util.Base64;
-import org.jboss.sepro.stereotype.LoggedIn;
-import org.jboss.sepro.util.HashTool;
 import org.jboss.sepro.dto.User;
 import org.jboss.sepro.service.IUserRegistration;
+import org.jboss.sepro.service.producer.SecurityProducer;
+import org.jboss.sepro.util.HashTool;
 
 /**
  * BasicSecurityInterceptor is used when "security" parameter is set to "basic".
@@ -77,14 +76,13 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
     @Inject
     IUserRegistration userRegistration;
 
-    @Produces
-    @LoggedIn
-    User loggedUser;
+    @Inject
+    SecurityProducer securityProducer;
 
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod methodInvoked) throws Failure,
             WebApplicationException {
-        loggedUser = null;
+        securityProducer.setLoggedUser(null);
         Method method = methodInvoked.getMethod();
         String security = request.getUri().getQueryParameters().getFirst("security");
 
@@ -141,7 +139,7 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
         if (user == null || !user.getPassword().equals(password)) {
             return ACCESS_DENIED;
         }
-        loggedUser = user;
+        securityProducer.setLoggedUser(user);
 
         // Return null to continue request processing
         return null;

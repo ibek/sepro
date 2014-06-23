@@ -16,42 +16,45 @@
  */
 package org.jboss.sepro.service.ws;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
-@WebService(name = Echo.WS_NAME, serviceName = Echo.WS_SERVICE_NAME, targetNamespace = Echo.WS_NAMESPACE)
+@WebService(name = HttpStatus.WS_NAME, serviceName = HttpStatus.WS_SERVICE_NAME, targetNamespace = HttpStatus.WS_NAMESPACE)
 @HandlerChain(file="/handler-chain.xml")
-public class Echo {
+public class HttpStatus {
 
-    public final static String WS_NAME = "Echo";
-    public final static String WS_SERVICE_NAME = "EchoService";
+    public final static String WS_NAME = "HttpStatus";
+    public final static String WS_SERVICE_NAME = "HttpStatusService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
 
-    @WebMethod
-    public String ping() {
-        return "pong";
-    }
+    @Inject
+    Logger log;
+
+    @Resource
+    private WebServiceContext context;
 
     @WebMethod
-    public String complete(@WebParam(name = "option") String option) {
-        switch (option) {
-        case "ping": {
-            return "pong";
+    public void getStatus(@WebParam(name = "code") int code) {
+        if (code < 100 || code > 599) {
+            code = 400;
         }
-        case "hello": {
-            return "world";
-        }
-        default: {
-            return "default";
-        }
-        }
-    }
+        try {
+            MessageContext ctx = context.getMessageContext();
+            HttpServletResponse response = (HttpServletResponse) ctx.get(MessageContext.SERVLET_RESPONSE);
+            response.sendError(code);
+        } catch (IOException e) {
 
-    @WebMethod
-    public String echo(@WebParam(name = "message") String message) {
-        return message;
+        }
     }
 
 }

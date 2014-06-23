@@ -14,24 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.sepro.stereotype;
+package org.jboss.sepro.service.producer;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import org.jboss.sepro.dto.User;
+import org.jboss.sepro.stereotype.LoggedIn;
 
-import javax.inject.Qualifier;
+@RequestScoped
+public class SecurityProducer {
+    
+    private User loggedUser = null;
 
-@Qualifier
-@Target({ TYPE, METHOD, FIELD, PARAMETER })
-@Retention(RUNTIME)
-@Documented
-public @interface LoggedIn {
-
+    @Produces
+    @LoggedIn
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+    
+    public void setLoggedUser(User loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+    
 }

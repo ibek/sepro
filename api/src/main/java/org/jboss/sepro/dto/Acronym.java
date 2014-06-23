@@ -21,7 +21,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
-@XmlRootElement
+@XmlRootElement(name = "acronym", namespace = "http://sepro.jboss.org")
 public class Acronym implements Serializable {
 
     private String abbreviation;

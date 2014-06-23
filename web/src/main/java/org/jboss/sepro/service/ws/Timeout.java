@@ -21,37 +21,26 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(name = Echo.WS_NAME, serviceName = Echo.WS_SERVICE_NAME, targetNamespace = Echo.WS_NAMESPACE)
+@WebService(name = Timeout.WS_NAME, serviceName = Timeout.WS_SERVICE_NAME, targetNamespace = Timeout.WS_NAMESPACE)
 @HandlerChain(file="/handler-chain.xml")
-public class Echo {
+public class Timeout {
 
-    public final static String WS_NAME = "Echo";
-    public final static String WS_SERVICE_NAME = "EchoService";
+    public final static String WS_NAME = "Timeout";
+    public final static String WS_SERVICE_NAME = "TimeoutService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
-
+    
     @WebMethod
-    public String ping() {
-        return "pong";
-    }
+    public void wait(@WebParam(name = "millis") int millis) {
+        if (millis < 1) {
+            return;
+        } else if (millis > 60000) {
+            millis = 60000;
+        }
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
 
-    @WebMethod
-    public String complete(@WebParam(name = "option") String option) {
-        switch (option) {
-        case "ping": {
-            return "pong";
         }
-        case "hello": {
-            return "world";
-        }
-        default: {
-            return "default";
-        }
-        }
-    }
-
-    @WebMethod
-    public String echo(@WebParam(name = "message") String message) {
-        return message;
     }
 
 }

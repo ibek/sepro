@@ -14,24 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.sepro.stereotype;
+@XmlSchema(namespace = "http://sepro.jboss.org", elementFormDefault = XmlNsForm.QUALIFIED, xmlns = { @XmlNs(prefix = "sep", namespaceURI = "http://sepro.jboss.org") })
+package org.jboss.sepro.dto;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import javax.inject.Qualifier;
-
-@Qualifier
-@Target({ TYPE, METHOD, FIELD, PARAMETER })
-@Retention(RUNTIME)
-@Documented
-public @interface LoggedIn {
-
-}
+import javax.xml.bind.annotation.*;

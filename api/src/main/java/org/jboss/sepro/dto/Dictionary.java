@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jboss.sepro.xml.AcronymMapAdapter;
 
 @SuppressWarnings("serial")
-@XmlRootElement(name = "dictionary")
+@XmlRootElement(name = "dictionary", namespace = "http://sepro.jboss.org")
 @XmlSeeAlso({ ArrayList.class, Acronym.class })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dictionary implements Serializable {

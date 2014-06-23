@@ -20,7 +20,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 @Provider
@@ -31,7 +30,7 @@ public class HttpStatus {
     @Path("/{code}")
     public Response getStatus(@PathParam("code") int code) {
         if (code < 100 || code > 599) {
-            return Response.status(Status.BAD_REQUEST).build();
+            code = 400;
         }
         return Response.status(code).build();
     }

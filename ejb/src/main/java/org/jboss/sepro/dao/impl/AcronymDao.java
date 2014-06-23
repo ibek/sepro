@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -47,6 +48,7 @@ public class AcronymDao implements IAcronymDao {
 
     @Inject
     @LoggedIn
+    @Any
     User user;
 
     @Override
