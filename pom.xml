@@ -53,6 +53,8 @@
 
     <version.jboss.as>7.3.0.Final-redhat-14</version.jboss.as>
 
+    <version.cxf>2.6.8.redhat-7</version.cxf>
+
     <!-- other plugin versions -->
     <version.ear.plugin>2.8</version.ear.plugin>
     <version.ejb.plugin>2.3</version.ejb.plugin>
@@ -133,6 +135,12 @@
         <version>${version.jboss.bom.eap}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-ws-addr</artifactId>
+        <version>${version.cxf}</version>
       </dependency>
 
     </dependencies>

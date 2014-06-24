@@ -26,6 +26,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
@@ -48,7 +49,7 @@ public class UserManagement {
             userRegistration.registerUser(user);
             return Response.status(Status.CREATED).build();
         } catch (DuplicateException ex) {
-            return Response.status(Status.CONFLICT).build();
+            throw new WebApplicationException(ex, Response.status(Status.CONFLICT).build());
         }
     }
 

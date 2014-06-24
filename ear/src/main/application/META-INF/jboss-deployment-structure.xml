@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+  <!-- Make sub deployments isolated by default, so they cannot see each others classes without a Class-Path entry -->
+  <ear-subdeployments-isolated>true</ear-subdeployments-isolated>
+  
+  <sub-deployment name="sepro-web.war">
+    <dependencies>
+      <module name="org.apache.cxf.impl" export="true"/>
+    </dependencies>
+  </sub-deployment>
+  
+</jboss-deployment-structure>

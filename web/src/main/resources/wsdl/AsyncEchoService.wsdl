@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://sepro.jboss.org" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="AsyncEchoService" targetNamespace="http://sepro.jboss.org">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://sepro.jboss.org" elementFormDefault="unqualified" targetNamespace="http://sepro.jboss.org" version="1.0">
+<xs:element name="callbackAsyncPing" type="tns:callbackAsyncPing"/>
+<xs:element name="ping" type="tns:ping"/>
+<xs:complexType name="ping">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="callbackAsyncPing">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ping">
+    <wsdl:part element="tns:ping" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="callbackAsyncPing">
+    <wsdl:part element="tns:callbackAsyncPing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AsyncEcho">
+    <wsdl:operation name="ping">
+      <wsdl:input message="tns:ping" name="ping" wsam:Action="http://sepro.jboss.org/AsyncEcho/pingRequest" wsaw:Action="http://sepro.jboss.org/AsyncEcho/pingRequest">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="callbackAsyncPing">
+      <wsdl:input message="tns:callbackAsyncPing" name="callbackAsyncPing" wsam:Action="http://sepro.jboss.org/AsyncEcho/callbackAsyncPingRequest" wsaw:Action="http://sepro.jboss.org/AsyncEcho/callbackAsyncPingRequest">
+    </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AsyncEchoServiceSoapBinding" type="tns:AsyncEcho">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsaw:UsingAddressing wsdl:required="false"/>
+    <wsp:PolicyReference URI="#AsyncEchoServiceSoapBinding_WSAM_Addressing_Policy"/>
+    <wsdl:operation name="callbackAsyncPing">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="callbackAsyncPing">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ping">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="ping">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AsyncEchoService">
+    <wsdl:port binding="tns:AsyncEchoServiceSoapBinding" name="AsyncEchoPort">
+      <soap:address location="http://localhost:8080/sepro/AsyncEchoService"/>
+    </wsdl:port>
+  </wsdl:service>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="AsyncEchoServiceSoapBinding_WSAM_Addressing_Policy"><wsam:Addressing wsp:Optional="true"><wsp:Policy/></wsam:Addressing></wsp:Policy>
+</wsdl:definitions>

@@ -16,18 +16,23 @@
  */
 package org.jboss.sepro.service.ws;
 
+import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceContext;
 
 @WebService(name = Echo.WS_NAME, serviceName = Echo.WS_SERVICE_NAME, targetNamespace = Echo.WS_NAMESPACE)
-@HandlerChain(file="/handler-chain.xml")
+@HandlerChain(file = "/handler-chain.xml")
 public class Echo {
 
     public final static String WS_NAME = "Echo";
     public final static String WS_SERVICE_NAME = "EchoService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
+
+    @Resource
+    private WebServiceContext context;
 
     @WebMethod
     public String ping() {

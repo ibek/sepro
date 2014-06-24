@@ -16,7 +16,10 @@
  */
 package org.jboss.sepro.exception;
 
+import javax.xml.ws.WebFault;
+
 @SuppressWarnings("serial")
+@WebFault(name = "DuplicateException", targetNamespace = "http://sepro.jboss.org")
 public class DuplicateException extends Exception {
 
 }
