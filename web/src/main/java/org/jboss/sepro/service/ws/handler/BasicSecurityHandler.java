@@ -55,7 +55,6 @@ public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public final boolean handleMessage(SOAPMessageContext context) {
-        securityProducer.setLoggedUser(null);
         Boolean outbound = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
         if (outbound) {
             return true; // only inbound messages are of interest
@@ -132,15 +131,7 @@ public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
     }
 
     protected boolean breakHandlerChain(SOAPMessageContext context) {
-        context.put(MessageContext.HTTP_RESPONSE_CODE, 401);
-
-        boolean oneway = (Boolean) context.get("com.sun.xml.internal.ws.server.OneWayOperation");
-        if (oneway) {
-            // do not just return false as in one-way communication, the chain
-            // is continued regardless of the status.
-            throw new WebServiceException("Unauthorized");
-        }
-        return false;
+        throw new WebServiceException("HTTP Error 401 Unauthorized");
     }
 
     protected boolean breakHandlerChainWithException(SOAPMessageContext context, Exception exception) {

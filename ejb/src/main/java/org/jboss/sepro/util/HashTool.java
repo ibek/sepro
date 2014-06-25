@@ -17,8 +17,11 @@
 package org.jboss.sepro.util;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.binary.Base64;
 
 public class HashTool {
 
@@ -29,6 +32,17 @@ public class HashTool {
             sb.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
+    }
+    
+    public static String hashPasswordDigest(String nonce, String timestamp, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        ByteBuffer buf = ByteBuffer.allocate(1000);
+        buf.put(Base64.decodeBase64(nonce));
+        buf.put(timestamp.getBytes("UTF-8"));
+        buf.put(password.getBytes("UTF-8"));
+        byte[] toHash = new byte[buf.position()];
+        buf.rewind();
+        buf.get(toHash);
+        return Base64.encodeBase64String(MessageDigest.getInstance("sha-1").digest(toHash)).trim();
     }
 
 }

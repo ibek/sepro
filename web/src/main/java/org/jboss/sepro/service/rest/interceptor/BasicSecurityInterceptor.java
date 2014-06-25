@@ -82,7 +82,6 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod methodInvoked) throws Failure,
             WebApplicationException {
-        securityProducer.setLoggedUser(null);
         Method method = methodInvoked.getMethod();
         String security = request.getUri().getQueryParameters().getFirst("security");
 

@@ -37,6 +37,7 @@ public class UserDTOTransformer implements IDTOTransformer<MUser, User> {
         User dto = new User();
         dto.setUsername(model.getUsername());
         dto.setPassword(model.getPassword());
+        dto.setPlainPassword(model.getPlainPassword());
         return dto;
     }
 
@@ -48,6 +49,7 @@ public class UserDTOTransformer implements IDTOTransformer<MUser, User> {
         MUser model = new MUser();
         model.setUsername(dto.getUsername().trim());
         try {
+            model.setPlainPassword(dto.getPassword().trim());
             model.setPassword(HashTool.hashPassword(dto.getPassword().trim()));
         } catch (Exception ex) {
             log.severe("Hash generation error for password");

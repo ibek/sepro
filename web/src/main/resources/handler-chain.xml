@@ -8,5 +8,10 @@
         org.jboss.sepro.service.ws.handler.BasicSecurityHandler
       </javaee:handler-class>
     </javaee:handler>
+    <javaee:handler>
+      <javaee:handler-class>
+        org.jboss.sepro.service.ws.handler.WSSecurityHandler
+      </javaee:handler-class>
+    </javaee:handler>
   </javaee:handler-chain>
 </javaee:handler-chains>

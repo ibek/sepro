@@ -40,6 +40,8 @@ public class MUser {
 
     @NotNull
     private String password;
+    
+    private String plainPassword;
 
     public Long getId() {
         return id;
@@ -63,6 +65,14 @@ public class MUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+    
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
     }
 
 }

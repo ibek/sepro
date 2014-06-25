@@ -102,6 +102,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.4-redhat-2</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
   <build>

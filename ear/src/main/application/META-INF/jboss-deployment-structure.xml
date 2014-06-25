@@ -9,4 +9,10 @@
     </dependencies>
   </sub-deployment>
   
+  <sub-deployment name="sepro-ejb.jar">
+    <dependencies>
+      <module name="org.apache.commons.codec" export="true"/>
+    </dependencies>
+  </sub-deployment>
+  
 </jboss-deployment-structure>

@@ -44,3 +44,8 @@ Asynchronous Web Services
 
 Asynchronous web services require WS-Addressing SOAP header to determine where to send the response.
 
+WS-Security
+-----------
+
+All the web services support WS-Security, so when a SOAP message contains a security SOAP header, the user is authenticated according to the credentials. For a password the both types can be used; PasswordText(plaintext), and PasswordDigest(hashed password Base64(SHA-1(nonce + created + password))).
+

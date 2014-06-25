@@ -16,22 +16,21 @@
  */
 package org.jboss.sepro.service.ws;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.Addressing;
 
+import org.apache.cxf.headers.Header;
 import org.apache.cxf.ws.addressing.impl.AddressingPropertiesImpl;
 import org.jboss.sepro.service.ws.skeleton.AsyncEchoService;
-
-import com.sun.xml.ws.api.addressing.AddressingVersion;
-import com.sun.xml.ws.api.message.Headers;
-import com.sun.xml.ws.developer.WSBindingProvider;
 
 @WebService(name = AsyncEcho.WS_NAME, serviceName = AsyncEcho.WS_SERVICE_NAME, targetNamespace = AsyncEcho.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
@@ -48,7 +47,8 @@ public class AsyncEcho {
     @WebMethod
     @Oneway
     public void ping() {
-        AddressingPropertiesImpl aprop = (AddressingPropertiesImpl) context.getMessageContext().get("javax.xml.ws.addressing.context.inbound");
+        AddressingPropertiesImpl aprop = (AddressingPropertiesImpl) context.getMessageContext().get(
+                "javax.xml.ws.addressing.context.inbound");
         if (aprop == null) {
             System.out.println("null");
             return;
@@ -56,15 +56,14 @@ public class AsyncEcho {
         String address = aprop.getReplyTo().getAddress().getValue();
         AsyncEchoService aes = new AsyncEchoService();
         org.jboss.sepro.service.ws.skeleton.AsyncEcho portType = aes.getAsyncEchoPort();
-        WSBindingProvider bp = (WSBindingProvider) portType;
-        bp.setAddress(address);
-        bp.setOutboundHeaders(Headers.create(AddressingVersion.W3C.relatesToTag, aprop.getMessageID().getValue()));
-        portType.callbackAsyncPing("asynchronous pong");
-        try {
-            bp.close();
-        } catch (IOException e) {
 
-        }
+        BindingProvider provider = (BindingProvider) portType;
+        provider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, address);
+        ArrayList<Header> headers = new ArrayList<Header>(1);
+        headers.add(new Header(new QName("http://schemas.xmlsoap.org/ws/2004/08/addressing", "RelatesTo"), aprop
+                .getMessageID().getValue()));
+        provider.getResponseContext().put(Header.HEADER_LIST, headers);
+        portType.callbackAsyncPing("asynchronous pong");
     }
 
     @WebMethod

@@ -19,6 +19,7 @@ package org.jboss.sepro.dto;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @SuppressWarnings("serial")
 @XmlRootElement(name = "user", namespace = "http://sepro.jboss.org")
@@ -27,6 +28,9 @@ public class User implements Serializable {
     private String username;
 
     private String password;
+    
+    @XmlTransient
+    private String plainPassword;
 
     public User() {
 
@@ -82,6 +86,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+    
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
     }
 
 }

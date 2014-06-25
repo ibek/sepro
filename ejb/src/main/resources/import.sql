@@ -16,4 +16,4 @@
 --
 
 -- You can use this file to load seed data into the database using SQL statements
-insert into SerProUser (id, username, password) values (0, 'ibek', '3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b') 
+insert into SerProUser (id, username, password, plainPassword) values (0, 'ibek', '3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b', 'ibek123;') 
