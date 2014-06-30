@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+   <hornetq-server>
+      <jms-destinations>
+         <jms-queue name="Echo">
+            <entry name="queue/Echo"/>
+            <entry name="java:jboss/exported/queue/Echo"/>
+         </jms-queue>
+         <jms-topic name="EchoResponse">
+            <entry name="topic/EchoResponse"/>
+            <entry name="java:jboss/exported/topic/EchoResponse"/>
+         </jms-topic>
+      </jms-destinations>
+   </hornetq-server>
+</messaging-deployment>

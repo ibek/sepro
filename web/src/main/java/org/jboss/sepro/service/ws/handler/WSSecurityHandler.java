@@ -33,7 +33,6 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.MessageContext;
-import javax.xml.ws.handler.MessageContext.Scope;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
@@ -99,7 +98,6 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
                             return breakHandlerChain(context);
                         }
                     } else if (!user.getPassword().equals(entry.getValue())) {
-                        context.put(MessageContext.HTTP_RESPONSE_CODE, 401);
                         return breakHandlerChain(context);
                     }
                     securityProducer.setLoggedUser(user);
@@ -117,7 +115,6 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
         Iterator<SOAPElement> childElems = header.getChildElements(new QName(AUTHN_URI, AUTHN_LNAME));
 
-        // iterate through child elements
         while (childElems.hasNext()) {
             SOAPElement child = childElems.next();
             authenticated = processSOAPHeaderInfo(child);

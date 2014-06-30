@@ -21,6 +21,11 @@ Available Web Services (JAX-WS)
 * Timeout
 * UserManagement
 
+Available JMS Services
+----------------------
+
+* Echo
+
 Http Basic Security
 -------------------
 
@@ -48,4 +53,9 @@ WS-Security
 -----------
 
 All the web services support WS-Security, so when a SOAP message contains a security SOAP header, the user is authenticated according to the credentials. For a password the both types can be used; PasswordText(plaintext), and PasswordDigest(hashed password Base64(SHA-1(nonce + created + password))).
+
+Test Clients
+------------
+
+Module "test" contains the test clients. For example to send a JMS message to a specific queue and location.
 
