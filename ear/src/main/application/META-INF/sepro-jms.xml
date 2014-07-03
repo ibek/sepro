@@ -6,9 +6,17 @@
             <entry name="queue/Echo"/>
             <entry name="java:jboss/exported/queue/Echo"/>
          </jms-queue>
+         <jms-queue name="AcronymsDictionary">
+            <entry name="queue/AcronymsDictionary"/>
+            <entry name="java:jboss/exported/queue/AcronymsDictionary"/>
+         </jms-queue>
          <jms-topic name="EchoResponse">
             <entry name="topic/EchoResponse"/>
             <entry name="java:jboss/exported/topic/EchoResponse"/>
+         </jms-topic>
+         <jms-topic name="AcronymsDictionaryResponse">
+            <entry name="topic/AcronymsDictionaryResponse"/>
+            <entry name="java:jboss/exported/topic/AcronymsDictionaryResponse"/>
          </jms-topic>
       </jms-destinations>
    </hornetq-server>

@@ -93,7 +93,9 @@ public class AcronymsFinder implements IAcronymsFinder {
     @Override
     public void removeAcronym(Acronym acronym) {
         MAcronym model = acronymDao.getAcronym(acronym.getAbbreviation(), acronym.getMeaning());
-        acronymDao.removeAcronym(model);
+        if (model != null) {
+            acronymDao.removeAcronym(model);
+        }
     }
 
 }

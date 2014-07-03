@@ -37,6 +37,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>sepro-api</artifactId>
+      <type>jar</type>
+    </dependency>
+    <dependency>
       <groupId>org.jboss.as</groupId>
       <artifactId>jboss-as-jms-client-bom</artifactId>
       <version>7.2.1.Final-redhat-10</version>

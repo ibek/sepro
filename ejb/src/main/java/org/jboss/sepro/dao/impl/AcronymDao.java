@@ -78,7 +78,7 @@ public class AcronymDao implements IAcronymDao {
         Root<MAcronym> acronyms = cq.from(MAcronym.class);
 
         Predicate ap = cb.equal(cb.lower(acronyms.get(MAcronym_.abbreviation)), abbreviation.trim().toLowerCase());
-        Predicate mp = cb.equal(cb.lower(acronyms.get(MAcronym_.meaning)), meaning);
+        Predicate mp = cb.equal(acronyms.get(MAcronym_.meaning), meaning);
         Predicate op;
         if (user != null) {
             op = cb.equal(acronyms.get(MAcronym_.owner), user.getUsername());
