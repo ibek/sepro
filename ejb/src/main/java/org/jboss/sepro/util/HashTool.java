@@ -33,8 +33,9 @@ public class HashTool {
         }
         return sb.toString();
     }
-    
-    public static String hashPasswordDigest(String nonce, String timestamp, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+
+    public static String hashPasswordDigest(String nonce, String timestamp, String password)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException {
         ByteBuffer buf = ByteBuffer.allocate(1000);
         buf.put(Base64.decodeBase64(nonce));
         buf.put(timestamp.getBytes("UTF-8"));

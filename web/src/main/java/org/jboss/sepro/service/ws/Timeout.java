@@ -22,13 +22,13 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 @WebService(name = Timeout.WS_NAME, serviceName = Timeout.WS_SERVICE_NAME, targetNamespace = Timeout.WS_NAMESPACE)
-@HandlerChain(file="/handler-chain.xml")
+@HandlerChain(file = "/handler-chain.xml")
 public class Timeout {
 
     public final static String WS_NAME = "Timeout";
     public final static String WS_SERVICE_NAME = "TimeoutService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
-    
+
     @WebMethod
     public void wait(@WebParam(name = "millis") int millis) {
         if (millis < 1) {

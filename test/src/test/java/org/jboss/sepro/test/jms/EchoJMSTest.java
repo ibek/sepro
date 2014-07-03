@@ -32,7 +32,7 @@ public class EchoJMSTest extends AbstractJMSTest {
 
     private static Queue queue;
     private static Topic topicResponse;
-    
+
     public static void lookup() throws Exception {
         queue = (javax.jms.Queue) ctx.lookup("queue/Echo");
         topicResponse = (javax.jms.Topic) ctx.lookup("topic/EchoResponse");

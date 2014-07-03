@@ -18,3 +18,4 @@
 package org.jboss.sepro.dto;
 
 import javax.xml.bind.annotation.*;
+

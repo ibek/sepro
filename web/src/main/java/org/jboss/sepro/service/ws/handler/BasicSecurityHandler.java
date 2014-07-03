@@ -45,7 +45,7 @@ public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public final void close(MessageContext context) {
-        
+
     }
 
     @Override

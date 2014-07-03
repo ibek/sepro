@@ -24,7 +24,7 @@ import org.jboss.sepro.stereotype.LoggedIn;
 
 @RequestScoped
 public class SecurityProducer {
-    
+
     private User loggedUser = null;
 
     @Produces
@@ -32,9 +32,9 @@ public class SecurityProducer {
     public User getLoggedUser() {
         return loggedUser;
     }
-    
+
     public void setLoggedUser(User loggedUser) {
         this.loggedUser = loggedUser;
     }
-    
+
 }

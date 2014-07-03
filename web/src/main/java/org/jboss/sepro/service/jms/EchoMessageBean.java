@@ -42,10 +42,8 @@ public class EchoMessageBean implements MessageListener {
         Session session = null;
         try {
             Context ctx = new InitialContext();
-            ConnectionFactory connectionFactory = (ConnectionFactory) ctx
-                    .lookup("java:/JmsXA");
-            Topic respTopic = (Topic) ctx
-                    .lookup("java:/topic/EchoResponse");
+            ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("java:/JmsXA");
+            Topic respTopic = (Topic) ctx.lookup("java:/topic/EchoResponse");
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             connection.start();

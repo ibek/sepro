@@ -35,7 +35,7 @@ import org.jboss.sepro.exception.DuplicateException;
 import org.jboss.sepro.service.IAcronymsFinder;
 
 @WebService(name = AcronymsDictionary.WS_NAME, serviceName = AcronymsDictionary.WS_SERVICE_NAME, targetNamespace = AcronymsDictionary.WS_NAMESPACE)
-@HandlerChain(file="/handler-chain.xml")
+@HandlerChain(file = "/handler-chain.xml")
 public class AcronymsDictionary {
 
     public final static String WS_NAME = "AcronymsDictionary";
@@ -69,13 +69,13 @@ public class AcronymsDictionary {
     public Dictionary getDictionary() {
         return acronymFinder.getDictionary();
     }
-    
+
     @WebMethod
     @WebResult(name = "acronym")
     public List<Acronym> getAcronyms(@WebParam(name = "abbreviation") String abbreviation) {
         return acronymFinder.getAcronymsFor(abbreviation);
     }
-    
+
     @WebMethod
     public void removeAcronym(@WebParam(name = "acronym", targetNamespace = "http://sepro.jboss.org") Acronym acronym) {
         acronymFinder.removeAcronym(acronym);

@@ -103,7 +103,7 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
                     securityProducer.setLoggedUser(user);
                 }
             }
-        } catch (SOAPException|IOException|NoSuchAlgorithmException ex) {
+        } catch (SOAPException | IOException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }
         return true;
@@ -172,7 +172,7 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
         }
         return new SimpleEntry<String, String>(id, password);
     }
-    
+
     protected boolean breakHandlerChain(SOAPMessageContext context) {
         throw new WebServiceException("HTTP Error 401 Unauthorized");
     }

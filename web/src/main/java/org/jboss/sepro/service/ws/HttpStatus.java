@@ -30,7 +30,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
 @WebService(name = HttpStatus.WS_NAME, serviceName = HttpStatus.WS_SERVICE_NAME, targetNamespace = HttpStatus.WS_NAMESPACE)
-@HandlerChain(file="/handler-chain.xml")
+@HandlerChain(file = "/handler-chain.xml")
 public class HttpStatus {
 
     public final static String WS_NAME = "HttpStatus";

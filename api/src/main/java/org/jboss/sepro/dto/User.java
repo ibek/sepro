@@ -28,7 +28,7 @@ public class User implements Serializable {
     private String username;
 
     private String password;
-    
+
     @XmlTransient
     private String plainPassword;
 
@@ -87,11 +87,11 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getPlainPassword() {
         return plainPassword;
     }
-    
+
     public void setPlainPassword(String plainPassword) {
         this.plainPassword = plainPassword;
     }
