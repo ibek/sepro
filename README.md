@@ -6,25 +6,34 @@ Service Provider is a Java EE application of various services (REST, WS, JMS, EJ
 Available REST Services (JAX-RS)
 -----------------------
 
-* AcronymsDictionary
-* Echo
-* HttpStatus
-* Timeout
-* UserManagement
+url: http://host:port/sepro/rest/{service}
+
+* AcronymsDictionary - /acronym
+* Echo - /echo
+* HttpStatus - /status
+* Timeout - /timout
+* UserManagement - /user
 
 Available Web Services (JAX-WS)
 ----------------------
 
-* AcronymsDictionary
-* Echo
-* HttpStatus
-* Timeout
-* UserManagement
+url: http://host:port/sepro/{service}?wsdl
+
+* AcronymsDictionary - /AcronymsDictionaryService
+* Echo - /EchoService
+* HttpStatus - /HttpStatusService
+* Timeout - /TimeoutService
+* UserManagement - /UserManagementService
 
 Available JMS Services
 ----------------------
 
 * Echo
+ * request > queue/Echo
+ * response < topic/EchoResponse
+* AcronymsDictionary
+ * request > queue/AcronymsDictionary
+ * response < topic/AcronymsDictionaryResponse
 
 Http Basic Security
 -------------------
@@ -45,7 +54,7 @@ Http response with "202 Accepted" status code is returned with the location of r
 Asynchronous Web Services
 -------------------------
 
-* AsyncEcho
+* AsyncEcho - /AsyncEchoService
 
 Asynchronous web services require WS-Addressing SOAP header to determine where to send the response.
 
