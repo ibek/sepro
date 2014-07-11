@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>SePro</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+	<link
+		href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+		rel="stylesheet" />
+
+	<link rel="stylesheet" href="resources/css/normalize.min.css" />
+	<link rel="stylesheet" href="resources/css/main.css" />
+	<script src="resources/js/vendor/jquery-1.10.1.min.js"></script>
+	<script src="resources/js/vendor/jquery.hashchange.min.js"></script>
+	<script src="resources/js/vendor/jquery.easytabs.min.js"></script>
+
+	<script src="resources/js/main.js"></script>
+	<!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
+      <![endif]-->
+
+	<ui:param name="urlRoot"
+		value="#{request.scheme}://#{request.serverName}:#{request.serverPort}#{request.contextPath}" />
+</h:head>
+<h:body class="bg-fixed bg-1">
+	<!--[if lt IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+	<div class="main-container">
+		<div class="main wrapper clearfix">
+			<!-- Header Start -->
+			<header id="header">
+			<div id="logo">
+				<h2>Service Provider</h2>
+				<h4>for testing purposes</h4>
+			</div>
+			</header>
+			<!-- Header End -->
+			<!-- Main Tab Container -->
+			<div id="tab-container" class="tab-container">
+				<!-- Tab List -->
+				<ul class='etabs'>
+					<li class='tab' id="tab-about"><a href="#about"><i
+							class="icon-info"></i><span> About</span></a></li>
+					<li class='tab'><a href="#rest"><i
+							class="icon-external-link"></i><span> REST Services</span></a></li>
+					<li class='tab'><a href="#ws"><i class="icon-file-text"></i><span>
+								Web Services</span></a></li>
+					<li class='tab'><a href="#jms"><i class="icon-envelope"></i><span>
+								JMS Services</span></a></li>
+				</ul>
+				<!-- End Tab List -->
+				<div id="tab-data-wrap">
+					<!-- About Tab Data -->
+					<div id="about">
+						<section class="clearfix">
+						<div class="g2">
+							<div class="photo">
+								<img src="resources/images/icon.png" alt="Sunny Luthra" />
+							</div>
+							<div class="info">
+								<h2>Service Provider</h2>
+								<h4>for testing purposes</h4>
+								<p>SePro is a Java EE application which provides different
+									services available via various APIs. The aim is to have an
+									infrastructure for testing remote calls without a need of mock
+									services if they are not needed.</p>
+							</div>
+						</div>
+						<div class="g1">
+							<div class="main-links sidebar">
+								<ul>
+									<li><a href="https://github.com/ibek/sepro">Source
+											Code</a></li>
+									<li><a href="#documentation">Documentation</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="break"></div>
+						<div class="contact-info">
+							<div class="g1">
+								<div class="item-box clearfix"></div>
+							</div>
+							<div class="g1">
+								<div class="item-box clearfix">
+									<i class="icon-envelope"></i>
+									<div class="item-data">
+										<h3>
+											<a href="mailto:ibek@redhat.com">ibek@redhat.com</a>
+										</h3>
+										<p>Email Address</p>
+									</div>
+								</div>
+							</div>
+							<div class="g1">
+								<div class="item-box clearfix"></div>
+							</div>
+						</div>
+						</section>
+						<!-- content -->
+					</div>
+					<!-- End About Tab Data -->
+					<!-- REST Services Tab Data -->
+					<div id="rest">
+						<section class="clearfix">
+						<div class="g2">
+							<h3>REST Services</h3>
+							<ul class="no-list work">
+								<li>
+									<h5>Acronyms Dictionary</h5> <span class="label label-blue">#{urlRoot}/rest/acronym</span>
+									<p>Operations:</p>
+									<ul>
+										<li><b>Add acronym</b> <span class="label label-blue">POST
+												#{urlRoot}/rest/acronym</span>
+											<p>Content:</p>
+											<ul>
+												<li><b>"application/json"</b>
+												<code>{"abbreviation":"REST",
+														"meaning":"Representational state transfer"}</code></li>
+												<li><b>"application/xml"</b>
+												<code>&lt;acronym
+														xmlns="http://sepro.jboss.org"&gt;&lt;abbreviation&gt;REST&lt;/abbreviation&gt;&lt;meaning&gt;Representational
+														state transfer&lt;/meaning&gt;&lt;/acronym&gt;</code></li>
+											</ul></li>
+										<li><b>Get acronyms</b> <span class="label label-blue">GET
+												#{urlRoot}/rest/acronym/{abbreviation}</span>
+											<p>Result:</p>
+											<ul>
+												<li><b>"application/json"</b> -</li>
+												<li><b>"application/xml"</b> -</li>
+											</ul></li>
+										<li><b>Get dictionary</b> <span class="label label-blue">GET
+												#{urlRoot}/rest/acronym</span>
+											<p>Result:</p>
+											<ul>
+												<li><b>"application/json"</b> -</li>
+												<li><b>"application/xml"</b> -</li>
+											</ul></li>
+										<li><b>Remove acronym</b> <span class="label label-blue">DELETE
+												#{urlRoot}/rest/acronym</span>
+											<p>Content:</p>
+											<ul>
+												<li><b>"application/json"</b>
+												<code>{"abbreviation":"REST",
+														"meaning":"Representational state transfer"}</code></li>
+												<li><b>"application/xml"</b>
+												<code>&lt;acronym
+														xmlns="http://sepro.jboss.org"&gt;&lt;abbreviation&gt;REST&lt;/abbreviation&gt;&lt;meaning&gt;Representational
+														state transfer&lt;/meaning&gt;&lt;/acronym&gt;</code></li>
+											</ul></li>
+									</ul>
+								</li>
+								<li>
+									<h5>Echo</h5> <span class="label label-green">#{urlRoot}/rest/echo</span>
+									<p>Operations:</p>
+									<ul>
+										<li><b>Ping</b> <span class="label label-green">GET
+												#{urlRoot}/rest/echo/ping</span>
+											<p>Result: pong</p></li>
+										<li><b>Complete</b> <span class="label label-green">GET
+												#{urlRoot}/rest/echo/complete/{option}</span>
+											<p>Possible options and their results:</p>
+											<ul>
+												<li>ping -&gt; pong</li>
+												<li>hello -&gt; world</li>
+												<li>ANY OTHER -&gt; default</li>
+											</ul></li>
+										<li><b>Echo</b> <span class="label label-green">GET
+												#{urlRoot}/rest/echo</span>
+											<p>Content:</p>
+											<ul>
+												<li><b>"text/plain"</b> - ANY</li>
+												<li><b>"application/json"</b> - ANY</li>
+												<li><b>"application/xml"</b> - ANY</li>
+											</ul>
+											<p>Result:</p>
+											<ul>
+												<li><b>"text/plain"</b> - INPUT</li>
+												<li><b>"application/json"</b> - INPUT</li>
+												<li><b>"application/xml"</b> - INPUT</li>
+											</ul></li>
+									</ul>
+								</li>
+								<li>
+									<h5>HTTP Status</h5> <span class="label label-green">#{urlRoot}/rest/status</span>
+									<p>Operations:</p>
+									<ul>
+										<li><b>Get status</b> <span class="label label-green">GET
+												#{urlRoot}/rest/status/{code}</span>
+											<p>Result: Empty HTTP Response with the given status CODE</p>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>Timeout</h5> <span class="label label-green">#{urlRoot}/rest/timeout</span>
+									<p>Operations:</p>
+									<ul>
+										<li><b>Wait</b> <span class="label label-green">GET
+												#{urlRoot}/rest/timeout/{millis}</span>
+											<p>Result: Empty HTTP 200 OK Response after the time in
+												milliseconds (1 - 60 000)</p></li>
+									</ul>
+								</li>
+								<li>
+									<h5>User Management</h5> <span class="label label-blue">#{urlRoot}/rest/user</span>
+									<p>Operations:</p>
+									<ul>
+										<li><b>Register new user</b> <span
+											class="label label-blue">POST #{urlRoot}/rest/user</span>
+											<p>Content:</p>
+											<ul>
+												<li><b>"application/json"</b>
+												<code>{"username":"ibek", "password":"ibek123;"}</code></li>
+												<li><b>"application/xml"</b>
+												<code>&lt;user
+														xmlns="http://sepro.jboss.org"&gt;&lt;username&gt;ibek&lt;/username&gt;&lt;password&gt;ibek123;&lt;/password&gt;&lt;/user&gt;</code></li>
+											</ul></li>
+										<li><b>Get user list</b> <span class="label label-blue">GET
+												#{urlRoot}/rest/user</span>
+											<p>Result:</p>
+											<ul>
+												<li><b>"application/json"</b> -</li>
+												<li><b>"application/xml"</b> -</li>
+											</ul></li>
+										<li><b>Get user details</b> <span
+											class="label label-blue">GET
+												#{urlRoot}/rest/user/{username}</span>
+											<p>Result:</p>
+											<ul>
+												<li><b>"application/json"</b> -</li>
+												<li><b>"application/xml"</b> -</li>
+											</ul></li>
+										<li><b>Remove user</b> <span class="label label-blue">DELETE
+												#{urlRoot}/rest/user</span>
+											<p>Content:</p>
+											<ul>
+												<li><b>"application/json"</b>
+												<code>{"username":"ibek", "password":"ibek123;"}</code></li>
+												<li><b>"application/xml"</b>
+												<code>&lt;user
+														xmlns="http://sepro.jboss.org"&gt;&lt;username&gt;ibek&lt;/username&gt;&lt;password&gt;ibek123;&lt;/password&gt;&lt;/user&gt;</code></li>
+											</ul></li>
+									</ul>
+								</li>
+							</ul>
+							<h3>Security</h3>
+							<ul class="no-list work">
+								<li>
+									<h5>Basic</h5> <span class="label label-red">?security=basic</span>
+									<p>Every REST service is secured when "security" is set to
+										"basic" like #{urlRoot}/rest/echo/ping?security=basic</p>
+									<p>The users are managed by UserManagement WS and REST
+										service.</p>
+									<p>To perform a secured Web Service call, it is enough to
+										fill basic security authentication details in the HTTP request
+										header.</p>
+								</li>
+							</ul>
+							<h3>Asynchronous</h3>
+							<ul class="no-list work">
+								<li><span class="label label-orange">?asynch=true</span>
+									<p>Asynchronous Job Service is enable. For any asynchronous
+										REST request set "asynch" parameter to "true" like
+										#{urlRoot}/rest/echo/ping?asynch=true</p>
+									<p>Http response with "202 Accepted" status code is
+										returned with the location of result (e.g.
+										#{urlRoot}/rest/asynch/jobs/1403270895037-4).</p></li>
+							</ul>
+						</div>
+						<div class="g1">
+							<div class="sidebar">
+								<h3>Logs</h3>
+								<p>TODO</p>
+							</div>
+						</div>
+						</section>
+					</div>
+					<!-- End REST Services Tab Data -->
+					<!-- Web Services Tab Data -->
+					<div id="ws">
+						<section class="clearfix">
+						<div class="g2">
+							<h3>Web Services</h3>
+						</div>
+						</section>
+					</div>
+					<!-- End Web Services -->
+					<!-- JMS Services Tab -->
+					<div id="jms">
+						<section class="clearfix">
+						<div class="g2">
+							<h3>JMS Services</h3>
+						</div>
+						</section>
+					</div>
+					<!-- End JMS Services -->
+				</div>
+			</div>
+			<!-- End Tab Container -->
+			<footer>
+			<p>2014</p>
+			</footer>
+		</div>
+		<!-- #main -->
+	</div>
+	<!-- #main-container -->
+
+
+
+</h:body>
+</html>

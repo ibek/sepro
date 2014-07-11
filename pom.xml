@@ -64,6 +64,10 @@
     <!-- maven-compiler-plugin -->
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
+
+    <!-- other versions -->
+    <version.richfaces>4.3.7.Final</version.richfaces>
+
   </properties>
 
   <dependencyManagement>
@@ -141,6 +145,14 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-ws-addr</artifactId>
         <version>${version.cxf}</version>
+      </dependency>
+
+      <dependency>
+	    <groupId>org.richfaces</groupId>
+	    <artifactId>richfaces-bom</artifactId>
+	    <version>${version.richfaces}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
     </dependencies>
