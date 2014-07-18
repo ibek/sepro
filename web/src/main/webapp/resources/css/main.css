@@ -177,11 +177,11 @@ body {width: 92%; margin: 0 auto} /* Center page without wrapper */
   display: none;
 }
 #header h2{
-  color: #31b0d5;
+  background-color: #fff;
 }
 #header h4{
   margin-bottom:0px; 
-  color: #31b0d5;
+  background-color: #fff;
 }
 #header .visible{
   opacity: 1;
@@ -453,6 +453,15 @@ body {width: 92%; margin: 0 auto} /* Center page without wrapper */
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
+}
+.label a {
+  color: #ffffff;
+}
+.label a:hover {
+  color: #000000;
+}
+.label a:visited {
+  color: #ffffff;
 }
 .label-blue {
   background-color: #5bc0de;

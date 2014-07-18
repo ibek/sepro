@@ -121,11 +121,9 @@
 												#{urlRoot}/rest/acronym</span>
 											<p>Content:</p>
 											<ul>
-												<li><b>"application/json"</b>
-												<code>{"abbreviation":"REST",
+												<li><b>"application/json"</b> <code>{"abbreviation":"REST",
 														"meaning":"Representational state transfer"}</code></li>
-												<li><b>"application/xml"</b>
-												<code>&lt;acronym
+												<li><b>"application/xml"</b> <code>&lt;acronym
 														xmlns="http://sepro.jboss.org"&gt;&lt;abbreviation&gt;REST&lt;/abbreviation&gt;&lt;meaning&gt;Representational
 														state transfer&lt;/meaning&gt;&lt;/acronym&gt;</code></li>
 											</ul></li>
@@ -137,7 +135,7 @@
 												<li><b>"application/xml"</b> -</li>
 											</ul></li>
 										<li><b>Get dictionary</b> <span class="label label-blue">GET
-												#{urlRoot}/rest/acronym</span>
+												<a href="#{urlRoot}/rest/acronym">#{urlRoot}/rest/acronym</a></span>
 											<p>Result:</p>
 											<ul>
 												<li><b>"application/json"</b> -</li>
@@ -147,11 +145,9 @@
 												#{urlRoot}/rest/acronym</span>
 											<p>Content:</p>
 											<ul>
-												<li><b>"application/json"</b>
-												<code>{"abbreviation":"REST",
+												<li><b>"application/json"</b> <code>{"abbreviation":"REST",
 														"meaning":"Representational state transfer"}</code></li>
-												<li><b>"application/xml"</b>
-												<code>&lt;acronym
+												<li><b>"application/xml"</b> <code>&lt;acronym
 														xmlns="http://sepro.jboss.org"&gt;&lt;abbreviation&gt;REST&lt;/abbreviation&gt;&lt;meaning&gt;Representational
 														state transfer&lt;/meaning&gt;&lt;/acronym&gt;</code></li>
 											</ul></li>
@@ -162,7 +158,7 @@
 									<p>Operations:</p>
 									<ul>
 										<li><b>Ping</b> <span class="label label-green">GET
-												#{urlRoot}/rest/echo/ping</span>
+												<a href="#{urlRoot}/rest/echo/ping">#{urlRoot}/rest/echo/ping</a></span>
 											<p>Result: pong</p></li>
 										<li><b>Complete</b> <span class="label label-green">GET
 												#{urlRoot}/rest/echo/complete/{option}</span>
@@ -216,14 +212,13 @@
 											class="label label-blue">POST #{urlRoot}/rest/user</span>
 											<p>Content:</p>
 											<ul>
-												<li><b>"application/json"</b>
-												<code>{"username":"ibek", "password":"ibek123;"}</code></li>
-												<li><b>"application/xml"</b>
-												<code>&lt;user
+												<li><b>"application/json"</b> <code>{"username":"ibek",
+														"password":"ibek123;"}</code></li>
+												<li><b>"application/xml"</b> <code>&lt;user
 														xmlns="http://sepro.jboss.org"&gt;&lt;username&gt;ibek&lt;/username&gt;&lt;password&gt;ibek123;&lt;/password&gt;&lt;/user&gt;</code></li>
 											</ul></li>
 										<li><b>Get user list</b> <span class="label label-blue">GET
-												#{urlRoot}/rest/user</span>
+												<a href="#{urlRoot}/rest/user">#{urlRoot}/rest/user</a></span>
 											<p>Result:</p>
 											<ul>
 												<li><b>"application/json"</b> -</li>
@@ -241,10 +236,9 @@
 												#{urlRoot}/rest/user</span>
 											<p>Content:</p>
 											<ul>
-												<li><b>"application/json"</b>
-												<code>{"username":"ibek", "password":"ibek123;"}</code></li>
-												<li><b>"application/xml"</b>
-												<code>&lt;user
+												<li><b>"application/json"</b> <code>{"username":"ibek",
+														"password":"ibek123;"}</code></li>
+												<li><b>"application/xml"</b> <code>&lt;user
 														xmlns="http://sepro.jboss.org"&gt;&lt;username&gt;ibek&lt;/username&gt;&lt;password&gt;ibek123;&lt;/password&gt;&lt;/user&gt;</code></li>
 											</ul></li>
 									</ul>
@@ -256,11 +250,7 @@
 									<h5>Basic</h5> <span class="label label-red">?security=basic</span>
 									<p>Every REST service is secured when "security" is set to
 										"basic" like #{urlRoot}/rest/echo/ping?security=basic</p>
-									<p>The users are managed by UserManagement WS and REST
-										service.</p>
-									<p>To perform a secured Web Service call, it is enough to
-										fill basic security authentication details in the HTTP request
-										header.</p>
+									<p>The users are managed by UserManagement REST service.</p>
 								</li>
 							</ul>
 							<h3>Asynchronous</h3>
@@ -288,6 +278,66 @@
 						<section class="clearfix">
 						<div class="g2">
 							<h3>Web Services</h3>
+
+							<ul class="no-list work">
+								<li>
+									<h5>Acronyms Dictionary</h5> <span class="label label-blue"><a href="#{urlRoot}/AcronymsDictionaryService?wsdl">#{urlRoot}/AcronymsDictionaryService?wsdl</a></span>
+									<p></p>
+								</li>
+								<li>
+									<h5>Echo</h5> <span class="label label-blue"><a href="#{urlRoot}/EchoService?wsdl">#{urlRoot}/EchoService?wsdl</a></span>
+									<p></p>
+								</li>
+								<li>
+									<h5>HTTP Status</h5> <span class="label label-blue"><a href="#{urlRoot}/HttpStatusService?wsdl">#{urlRoot}/HttpStatusService?wsdl</a></span>
+									<p></p>
+								</li>
+								<li>
+									<h5>Timeout</h5> <span class="label label-blue"><a href="#{urlRoot}/TimeoutService?wsdl">#{urlRoot}/TimeoutService?wsdl</a></span>
+									<p></p>
+								</li>
+								<li>
+									<h5>User Management</h5> <span class="label label-blue"><a href="#{urlRoot}/UserManagementService?wsdl">#{urlRoot}/UserManagementService?wsdl</a></span>
+									<p></p>
+								</li>
+							</ul>
+
+							<h3>Security</h3>
+							<p>The users are managed by UserManagement Web service.</p>
+							<ul class="no-list work">
+								<li>
+									<h5>Basic</h5>
+									<p>To perform a secured Web Service call, it is enough to
+										fill basic security authentication details in the HTTP request
+										header.</p>
+								</li>
+								<li>
+									<h5>WS-Security</h5>
+									<p>All the web services support WS-Security, so when a SOAP
+										message contains a security SOAP header, the user is
+										authenticated according to the credentials. For a password the
+										both types can be used:</p>
+									<ul>
+										<li>PasswordText(plaintext)</li>
+										<li>PasswordDigest(hashed password Base64(SHA-1(nonce +
+											created + password)))</li>
+									</ul>
+								</li>
+							</ul>
+							<h3>Asynchronous</h3>
+							<p>Asynchronous web services require WS-Addressing SOAP
+								header to determine where to send the response.</p>
+							<ul class="no-list work">
+								<li>
+									<h5>Echo</h5> <span class="label label-blue"><a href="#{urlRoot}/AsyncEchoService?wsdl">#{urlRoot}/AsyncEchoService?wsdl</a></span>
+								</li>
+							</ul>
+						</div>
+						<div class="g1">
+							<div class="sidebar">
+								<h3>Logs</h3>
+								<p>TODO</p>
+							</div>
 						</div>
 						</section>
 					</div>
@@ -297,6 +347,27 @@
 						<section class="clearfix">
 						<div class="g2">
 							<h3>JMS Services</h3>
+
+							<ul class="no-list work">
+								<li>
+									<h5>Acronyms Dictionary</h5> <span class="label label-blue">queue/AcronymsDictionary</span>
+									<p>Response topic: "topic/AcronymsDictionaryResponse"</p>
+								</li>
+								<li>
+									<h5>Echo</h5> <span class="label label-green">queue/Echo</span>
+									<p>Response topic: "topic/EchoResponse"</p>
+								</li>
+							</ul>
+							
+							<h3>Security and Connection</h3>
+							<p>Add a new user via ./eap6/bin/add_user.sh script and put the following user into the group "guest" for the default settings.</p>
+							<p>Username: ibek &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password: ibek1234;</p>
+						</div>
+						<div class="g1">
+							<div class="sidebar">
+								<h3>Logs</h3>
+								<p>TODO</p>
+							</div>
 						</div>
 						</section>
 					</div>
