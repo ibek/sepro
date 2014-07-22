@@ -18,21 +18,26 @@ package org.jboss.sepro.test.jms;
 
 import java.util.UUID;
 
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EchoJMSTest extends AbstractJMSTest {
 
     private static Queue queue;
     private static Topic topicResponse;
+    private String receivedMessage;
 
+    @BeforeClass
     public static void lookup() throws Exception {
         queue = (javax.jms.Queue) ctx.lookup("queue/Echo");
         topicResponse = (javax.jms.Topic) ctx.lookup("topic/EchoResponse");
@@ -48,20 +53,30 @@ public class EchoJMSTest extends AbstractJMSTest {
         textMessage.setJMSCorrelationID(correlationId);
         String expectedMessage = "Hello World";
         textMessage.setText(expectedMessage);
-        System.out.println("Sending Message: " + textMessage.getText());
-        messageProducer.send(textMessage);
+        System.out.println("Sending Message: " + textMessage.getText() + " from " + correlationId);
 
         MessageConsumer messageConsumer = session.createConsumer(topicResponse, messageSelector);
-
-        Message msg = messageConsumer.receive();
-        String receivedMessage = null;
-        if (msg instanceof TextMessage) {
-            TextMessage txtMsg = (TextMessage) msg;
-            receivedMessage = txtMsg.getText();
-            System.out.println("Received Message: " + receivedMessage);
-        }
-
+        receivedMessage = null;
+        messageConsumer.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                if (message != null && message instanceof TextMessage) {
+                    TextMessage txtMsg = (TextMessage) message;
+                    try {
+                        receivedMessage = txtMsg.getText();
+                    } catch (JMSException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Received Message: " + receivedMessage);
+                }
+            }
+        });
+        
+        messageProducer.send(textMessage);
+        
+        waitForResult(receivedMessage);
         Assert.assertEquals(expectedMessage, receivedMessage);
+        
     }
 
 }

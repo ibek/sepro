@@ -16,6 +16,8 @@
  */
 package org.jboss.sepro.test.jms;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.jms.Connection;
@@ -24,6 +26,10 @@ import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.hornetq.api.core.TransportConfiguration;
+import org.hornetq.core.remoting.impl.netty.NettyConnectorFactory;
+import org.hornetq.core.remoting.impl.netty.TransportConstants;
+import org.hornetq.jms.client.HornetQJMSConnectionFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -43,25 +49,47 @@ public abstract class AbstractJMSTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        Properties initialProps = new Properties();
-        initialProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-        initialProps.setProperty(Context.PROVIDER_URL, "remote://localhost:4447");
-        initialProps.setProperty(Context.SECURITY_PRINCIPAL, USERNAME);
-        initialProps.setProperty(Context.SECURITY_CREDENTIALS, PASSWORD);
+        try {
 
-        ctx = new InitialContext(initialProps);
+            Properties initialProps = new Properties();
+            initialProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+            initialProps.setProperty(Context.PROVIDER_URL, "remote://127.0.0.1:4447");
+            // initialProps.setProperty(Context.SECURITY_PRINCIPAL, USERNAME);
+            // initialProps.setProperty(Context.SECURITY_CREDENTIALS,PASSWORD);
 
-        ConnectionFactory connectionFactory = (javax.jms.ConnectionFactory) ctx
-                .lookup("java:jms/RemoteConnectionFactory");
-        connection = connectionFactory.createConnection(USERNAME, PASSWORD);
-        connection.start();
-        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            ctx = new InitialContext(initialProps);
+
+            Map<String, Object> connParams = new HashMap<String, Object>(3);
+            connParams.put(TransportConstants.PORT_PROP_NAME, 5445);
+            connParams.put(TransportConstants.HOST_PROP_NAME, "localhost");
+            connParams.put(TransportConstants.SSL_ENABLED_PROP_NAME, false);
+            // create connection factory
+            ConnectionFactory connectionFactory = new HornetQJMSConnectionFactory(false, new TransportConfiguration(
+                    NettyConnectorFactory.class.getName(), connParams));
+            connection = connectionFactory.createConnection();
+            connection.start();
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
         session.close();
         connection.close();
+    }
+    
+    protected void waitForResult(Object obj) throws InterruptedException {
+        int checked = 0;
+        while (obj == null) {
+            checked++;
+            if (checked > 10) {
+                break;
+            }
+            Thread.sleep(500);
+        }
     }
 
 }

@@ -56,7 +56,7 @@ public class AcronymsDictionaryMessageBean implements MessageListener {
 
             Context ctx = new InitialContext();
             ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("java:/JmsXA");
-            Topic respTopic = (Topic) ctx.lookup("java:/topic/AcronymsDictionaryResponse");
+            Topic respTopic = (Topic) ctx.lookup("topic/AcronymsDictionaryResponse");
 
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);

@@ -18,8 +18,10 @@ package org.jboss.sepro.test.jms;
 
 import java.util.UUID;
 
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
@@ -35,6 +37,9 @@ public class AcronymsDictionaryJMSTest extends AbstractJMSTest {
 
     private static Queue queue;
     private static Topic topicResponse;
+    
+    private Object[] acronyms;
+    private String receivedMessage;
 
     @BeforeClass
     public static void lookup() throws Exception {
@@ -88,17 +93,25 @@ public class AcronymsDictionaryJMSTest extends AbstractJMSTest {
         message.setJMSCorrelationID(correlationId);
 
         System.out.println("Sending Acronym: " + acronym);
+
+        MessageConsumer messageConsumer = session.createConsumer(topicResponse, messageSelector);receivedMessage = null;
+        messageConsumer.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                if (message != null && message instanceof TextMessage) {
+                    TextMessage txtMsg = (TextMessage) message;
+                    try {
+                        receivedMessage = txtMsg.getText();
+                    } catch (JMSException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Received Error Message: " + receivedMessage);
+                }
+            }
+        });
+        
         messageProducer.send(message);
-
-        MessageConsumer messageConsumer = session.createConsumer(topicResponse, messageSelector);
-
-        Message msg = messageConsumer.receive(1000);
-        String receivedMessage = null;
-        if (msg instanceof TextMessage) {
-            TextMessage txtMsg = (TextMessage) msg;
-            receivedMessage = txtMsg.getText();
-            System.out.println("Received Error Message: " + receivedMessage);
-        }
+        
     }
 
     private Object[] getAcronym(String abbreviation) throws Exception {
@@ -110,12 +123,25 @@ public class AcronymsDictionaryJMSTest extends AbstractJMSTest {
 
         System.out.println("Sending a request for meanings of: JMS");
         MessageProducer messageProducer = session.createProducer(queue);
-        messageProducer.send(message);
 
         MessageConsumer messageConsumer = session.createConsumer(topicResponse, messageSelector);
-        Message msg = messageConsumer.receive(1000);
-        Assert.assertTrue(msg instanceof ObjectMessage);
-        Object[] acronyms = ((Object[]) ((ObjectMessage) msg).getObject());
+        acronyms = null;
+        messageConsumer.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                Assert.assertTrue(message instanceof ObjectMessage);
+                try {
+                    acronyms = ((Object[]) ((ObjectMessage) message).getObject());
+                } catch (JMSException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        
+        messageProducer.send(message);
+        
+        waitForResult(acronyms);
+        
         return acronyms;
     }
 

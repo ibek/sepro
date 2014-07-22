@@ -43,7 +43,7 @@ public class EchoMessageBean implements MessageListener {
         try {
             Context ctx = new InitialContext();
             ConnectionFactory connectionFactory = (ConnectionFactory) ctx.lookup("java:/JmsXA");
-            Topic respTopic = (Topic) ctx.lookup("java:/topic/EchoResponse");
+            Topic respTopic = (Topic) ctx.lookup("topic/EchoResponse");
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             connection.start();
