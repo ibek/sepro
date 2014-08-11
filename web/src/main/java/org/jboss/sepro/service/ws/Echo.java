@@ -17,16 +17,24 @@
 package org.jboss.sepro.service.ws;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.WS;
+
 @WebService(name = Echo.WS_NAME, serviceName = Echo.WS_SERVICE_NAME, targetNamespace = Echo.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
 public class Echo {
 
+    @Inject
+    @WS
+    IServiceLogger slogger;
+    
     public final static String WS_NAME = "Echo";
     public final static String WS_SERVICE_NAME = "EchoService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
@@ -36,11 +44,13 @@ public class Echo {
 
     @WebMethod
     public String ping() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Ping");
         return "pong";
     }
 
     @WebMethod
     public String complete(@WebParam(name = "option") String option) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Complete " + option);
         switch (option) {
         case "ping": {
             return "pong";
@@ -56,6 +66,7 @@ public class Echo {
 
     @WebMethod
     public String echo(@WebParam(name = "message") String message) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Echo " + message);
         return message;
     }
 

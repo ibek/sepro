@@ -681,6 +681,8 @@ Change widths as necessary
   .sidebar{
    padding-left: 20px;
    border-left: 1px solid #f1f1f1;
+   overflow:auto;
+   white-space: nowrap;
  }
  /* COLUMN GRID */
  .g1,.g2,.g3 {display:inline; float: left}

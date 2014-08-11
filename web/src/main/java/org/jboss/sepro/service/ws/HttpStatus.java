@@ -29,10 +29,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.WS;
+
 @WebService(name = HttpStatus.WS_NAME, serviceName = HttpStatus.WS_SERVICE_NAME, targetNamespace = HttpStatus.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
 public class HttpStatus {
 
+    @Inject
+    @WS
+    IServiceLogger slogger;
+    
     public final static String WS_NAME = "HttpStatus";
     public final static String WS_SERVICE_NAME = "HttpStatusService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
@@ -45,6 +52,7 @@ public class HttpStatus {
 
     @WebMethod
     public void getStatus(@WebParam(name = "code") int code) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get status code " + code);
         if (code < 100 || code > 599) {
             code = 400;
         }

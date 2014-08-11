@@ -16,6 +16,7 @@
  */
 package org.jboss.sepro.service.rest;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,13 +24,21 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.REST;
+
 @Provider
 @Path("/timeout")
 public class Timeout {
 
+    @Inject
+    @REST
+    IServiceLogger slogger;
+    
     @GET
     @Path("/{millis}")
     public Response wait(@PathParam("millis") int millis) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Timeout for " + millis + "ms");
         if (millis < 1 || millis > 60000) {
             return Response.status(Status.BAD_REQUEST).build();
         }

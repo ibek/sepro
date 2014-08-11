@@ -18,6 +18,7 @@ package org.jboss.sepro.service.jms;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.inject.Inject;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -30,14 +31,22 @@ import javax.jms.Topic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.JMS;
+
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/Echo"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") })
 public class EchoMessageBean implements MessageListener {
 
+    @Inject
+    @JMS
+    IServiceLogger slogger;
+    
     @Override
     public void onMessage(Message message) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Ping");
         Connection connection = null;
         Session session = null;
         try {

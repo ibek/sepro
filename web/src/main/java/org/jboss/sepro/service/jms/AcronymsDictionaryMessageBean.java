@@ -37,6 +37,8 @@ import javax.naming.InitialContext;
 import org.jboss.sepro.dto.Acronym;
 import org.jboss.sepro.exception.DuplicateException;
 import org.jboss.sepro.service.IAcronymsFinder;
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.JMS;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
@@ -44,6 +46,10 @@ import org.jboss.sepro.service.IAcronymsFinder;
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") })
 public class AcronymsDictionaryMessageBean implements MessageListener {
 
+    @Inject
+    @JMS
+    IServiceLogger slogger;
+    
     @Inject
     IAcronymsFinder acronymFinder;
 
@@ -66,6 +72,7 @@ public class AcronymsDictionaryMessageBean implements MessageListener {
             case "addAcronym": {
                 if (message instanceof ObjectMessage) {
                     Acronym acronym = ((Acronym) ((ObjectMessage) message).getObject());
+                    slogger.addServiceLog(getClass().getSimpleName(), "Add acronym " + ((acronym != null)?acronym.toString():"null"));
                     try {
                         acronymFinder.addAcronym(acronym);
                     } catch (DuplicateException dex) {
@@ -79,6 +86,7 @@ public class AcronymsDictionaryMessageBean implements MessageListener {
                 break;
             }
             case "getDictionary": {
+                slogger.addServiceLog(getClass().getSimpleName(), "Get dictionary");
                 MessageProducer producer = session.createProducer(respTopic);
                 Message response = session.createObjectMessage(acronymFinder.getDictionary());
                 response.setJMSCorrelationID(message.getJMSCorrelationID());
@@ -88,6 +96,7 @@ public class AcronymsDictionaryMessageBean implements MessageListener {
             case "getAcronyms": {
                 if (message instanceof TextMessage) {
                     String abbreviation = ((TextMessage) message).getText();
+                    slogger.addServiceLog(getClass().getSimpleName(), "Get acronyms for " + abbreviation);
                     List<Acronym> acronyms = acronymFinder.getAcronymsFor(abbreviation);
 
                     MessageProducer producer = session.createProducer(respTopic);
@@ -100,11 +109,13 @@ public class AcronymsDictionaryMessageBean implements MessageListener {
             case "removeAcronym": {
                 if (message instanceof ObjectMessage) {
                     Acronym acronym = ((Acronym) ((ObjectMessage) message).getObject());
+                    slogger.addServiceLog(getClass().getSimpleName(), "Remove acronym " + ((acronym != null)?acronym.toString():"null"));
                     acronymFinder.removeAcronym(acronym);
                 }
                 break;
             }
             default: {
+                slogger.addServiceLog(getClass().getSimpleName(), "No operation specified");
                 MessageProducer producer = session.createProducer(respTopic);
                 Message response = session
                         .createTextMessage("No operation specified - please set 'operation' string message parameter.");

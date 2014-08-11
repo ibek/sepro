@@ -33,11 +33,17 @@ import org.jboss.sepro.dto.Acronym;
 import org.jboss.sepro.dto.Dictionary;
 import org.jboss.sepro.exception.DuplicateException;
 import org.jboss.sepro.service.IAcronymsFinder;
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.WS;
 
 @WebService(name = AcronymsDictionary.WS_NAME, serviceName = AcronymsDictionary.WS_SERVICE_NAME, targetNamespace = AcronymsDictionary.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
 public class AcronymsDictionary {
 
+    @Inject
+    @WS
+    IServiceLogger slogger;
+    
     public final static String WS_NAME = "AcronymsDictionary";
     public final static String WS_SERVICE_NAME = "AcronymsDictionaryService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
@@ -50,6 +56,7 @@ public class AcronymsDictionary {
 
     @WebMethod
     public void addAcronym(@WebParam(name = "acronym", targetNamespace = "http://sepro.jboss.org") Acronym acronym) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Add acronym " + ((acronym != null)?acronym.toString():"null"));
         MessageContext ctx = context.getMessageContext();
         HttpServletResponse response = (HttpServletResponse) ctx.get(MessageContext.SERVLET_RESPONSE);
         try {
@@ -67,17 +74,20 @@ public class AcronymsDictionary {
     @WebMethod
     @WebResult(name = "dictionary")
     public Dictionary getDictionary() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get dictionary");
         return acronymFinder.getDictionary();
     }
 
     @WebMethod
     @WebResult(name = "acronym")
     public List<Acronym> getAcronyms(@WebParam(name = "abbreviation") String abbreviation) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get acronyms for " + abbreviation);
         return acronymFinder.getAcronymsFor(abbreviation);
     }
 
     @WebMethod
     public void removeAcronym(@WebParam(name = "acronym", targetNamespace = "http://sepro.jboss.org") Acronym acronym) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Remove acronym " + ((acronym != null)?acronym.toString():"null"));
         acronymFinder.removeAcronym(acronym);
     }
 

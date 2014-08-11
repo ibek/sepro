@@ -19,6 +19,7 @@ package org.jboss.sepro.service.ws;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.jws.HandlerChain;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -30,12 +31,18 @@ import javax.xml.ws.soap.Addressing;
 
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.ws.addressing.impl.AddressingPropertiesImpl;
+import org.jboss.sepro.service.IServiceLogger;
 import org.jboss.sepro.service.ws.skeleton.AsyncEchoService;
+import org.jboss.sepro.stereotype.WS;
 
 @WebService(name = AsyncEcho.WS_NAME, serviceName = AsyncEcho.WS_SERVICE_NAME, targetNamespace = AsyncEcho.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
 @Addressing
 public class AsyncEcho {
+    
+    @Inject
+    @WS
+    IServiceLogger slogger;
 
     public final static String WS_NAME = "AsyncEcho";
     public final static String WS_SERVICE_NAME = "AsyncEchoService";
@@ -47,6 +54,7 @@ public class AsyncEcho {
     @WebMethod
     @Oneway
     public void ping() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Ping");
         AddressingPropertiesImpl aprop = (AddressingPropertiesImpl) context.getMessageContext().get(
                 "javax.xml.ws.addressing.context.inbound");
         if (aprop == null) {

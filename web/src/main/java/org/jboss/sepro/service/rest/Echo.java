@@ -16,6 +16,7 @@
  */
 package org.jboss.sepro.service.rest;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,14 +25,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ext.Provider;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.REST;
+
 @Provider
 @Path("/echo")
 public class Echo {
+    
+    @Inject
+    @REST
+    IServiceLogger slogger;
 
     @GET
     @Path("/ping")
     @Produces({ "text/plain" })
     public String ping() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Ping");
         return "pong";
     }
 
@@ -39,6 +48,7 @@ public class Echo {
     @Path("/complete/{option}")
     @Produces({ "text/plain" })
     public String complete(@PathParam("option") String option) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Complete " + option);
         switch (option) {
         case "ping": {
             return "pong";
@@ -57,6 +67,7 @@ public class Echo {
     @Consumes({ "text/plain", "application/xml", "application/json" })
     @Produces({ "text/plain", "application/xml", "application/json" })
     public String echo(String message) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Echo " + message);
         return message;
     }
 

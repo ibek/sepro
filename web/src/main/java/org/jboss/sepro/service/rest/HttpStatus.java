@@ -16,19 +16,28 @@
  */
 package org.jboss.sepro.service.rest;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.REST;
+
 @Provider
 @Path("/status")
 public class HttpStatus {
 
+    @Inject
+    @REST
+    IServiceLogger slogger;
+    
     @GET
     @Path("/{code}")
     public Response getStatus(@PathParam("code") int code) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get status code " + code);
         if (code < 100 || code > 599) {
             code = 400;
         }

@@ -39,8 +39,10 @@ import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import org.jboss.resteasy.util.Base64;
 import org.jboss.sepro.dto.User;
+import org.jboss.sepro.service.IServiceLogger;
 import org.jboss.sepro.service.IUserRegistration;
 import org.jboss.sepro.service.producer.SecurityProducer;
+import org.jboss.sepro.stereotype.REST;
 import org.jboss.sepro.util.HashTool;
 
 /**
@@ -56,6 +58,10 @@ import org.jboss.sepro.util.HashTool;
 @ServerInterceptor
 @SecurityPrecedence
 public class BasicSecurityInterceptor implements PreProcessInterceptor {
+    
+    @Inject
+    @REST
+    IServiceLogger slogger;
 
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_SCHEME = "Basic";
@@ -105,6 +111,7 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
 
         // If no authorization information present; block access
         if (authorization == null || authorization.isEmpty()) {
+            slogger.addServiceLog("BasicSecurity", "No authorization information present, hence blocking access.");
             return AUTH_REQUIRED;
         }
 
@@ -136,6 +143,7 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
         User user = userRegistration.getUser(username);
         System.out.println(user);
         if (user == null || !user.getPassword().equals(password)) {
+            slogger.addServiceLog("BasicSecurity", "Access denied for " + username);
             return ACCESS_DENIED;
         }
         securityProducer.setLoggedUser(user);

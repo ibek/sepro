@@ -34,11 +34,17 @@ import org.jboss.sepro.dto.Acronym;
 import org.jboss.sepro.dto.Dictionary;
 import org.jboss.sepro.exception.DuplicateException;
 import org.jboss.sepro.service.IAcronymsFinder;
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.REST;
 
 @Provider
 @Path("/acronym")
 public class AcronymsDictionary {
 
+    @Inject
+    @REST
+    IServiceLogger slogger;
+    
     @Inject
     IAcronymsFinder acronymFinder;
 
@@ -46,6 +52,7 @@ public class AcronymsDictionary {
     @Path("/")
     @Consumes({ "application/xml", "application/json" })
     public Response addAcronym(Acronym acronym) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Add acronym " + ((acronym != null)?acronym.toString():"null"));
         try {
             acronymFinder.addAcronym(acronym);
             return Response.status(Status.CREATED).build();
@@ -58,6 +65,7 @@ public class AcronymsDictionary {
     @Path("/")
     @Produces({ "application/xml", "application/json" })
     public Dictionary getDictionary() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get dictionary");
         return acronymFinder.getDictionary();
     }
 
@@ -65,12 +73,14 @@ public class AcronymsDictionary {
     @Path("/{abbreviation}")
     @Produces({ "application/xml", "application/json" })
     public List<Acronym> getAcronyms(@PathParam("abbreviation") String abbreviation) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get acronyms for " + abbreviation);
         return acronymFinder.getAcronymsFor(abbreviation);
     }
 
     @DELETE
     @Consumes({ "application/xml", "application/json" })
     public void removeAcronym(Acronym acronym) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Remove acronym " + ((acronym != null)?acronym.toString():"null"));
         acronymFinder.removeAcronym(acronym);
     }
 

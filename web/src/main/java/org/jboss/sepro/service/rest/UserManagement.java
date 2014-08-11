@@ -33,11 +33,17 @@ import javax.ws.rs.ext.Provider;
 
 import org.jboss.sepro.dto.User;
 import org.jboss.sepro.exception.DuplicateException;
+import org.jboss.sepro.service.IServiceLogger;
 import org.jboss.sepro.service.IUserRegistration;
+import org.jboss.sepro.stereotype.REST;
 
 @Provider
 @Path("/user")
 public class UserManagement {
+    
+    @Inject
+    @REST
+    IServiceLogger slogger;
 
     @Inject
     IUserRegistration userRegistration;
@@ -45,6 +51,7 @@ public class UserManagement {
     @POST
     @Consumes({ "application/xml", "application/json" })
     public Response registerUser(User user) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Register user " + ((user != null)?user.toString():"null"));
         try {
             userRegistration.registerUser(user);
             return Response.status(Status.CREATED).build();
@@ -57,6 +64,7 @@ public class UserManagement {
     @Path("/")
     @Produces({ "application/xml", "application/json" })
     public List<User> getList() {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get all users");
         return userRegistration.getAllUsers();
     }
 
@@ -64,12 +72,14 @@ public class UserManagement {
     @Path("/{username}")
     @Produces({ "application/xml", "application/json" })
     public User getDetails(@PathParam("username") String username) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Get user details for " + username);
         return userRegistration.getUser(username);
     }
 
     @DELETE
     @Consumes({ "application/xml", "application/json" })
     public void removeUser(User user) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Remove user " + ((user != null)?user.toString():"null"));
         userRegistration.removeUser(user);
     }
 

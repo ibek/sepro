@@ -18,10 +18,17 @@ package org.jboss.sepro.util;
 
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.service.impl.ServiceLogger;
+import org.jboss.sepro.stereotype.JMS;
+import org.jboss.sepro.stereotype.REST;
+import org.jboss.sepro.stereotype.WS;
 
 /**
  * This class uses CDI to alias Java EE resources, such as the persistence
@@ -39,6 +46,27 @@ public class Resources {
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    }
+    
+    @Produces
+    @REST
+    @ApplicationScoped
+    public IServiceLogger getRESTLogger() {
+        return new ServiceLogger();
+    }
+    
+    @Produces
+    @WS
+    @ApplicationScoped
+    public IServiceLogger getWSLogger() {
+        return new ServiceLogger();
+    }
+    
+    @Produces
+    @JMS
+    @ApplicationScoped
+    public IServiceLogger getJMSLogger() {
+        return new ServiceLogger();
     }
 
 }

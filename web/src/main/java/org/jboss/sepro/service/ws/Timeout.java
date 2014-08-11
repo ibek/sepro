@@ -16,21 +16,30 @@
  */
 package org.jboss.sepro.service.ws;
 
+import javax.inject.Inject;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import org.jboss.sepro.service.IServiceLogger;
+import org.jboss.sepro.stereotype.WS;
+
 @WebService(name = Timeout.WS_NAME, serviceName = Timeout.WS_SERVICE_NAME, targetNamespace = Timeout.WS_NAMESPACE)
 @HandlerChain(file = "/handler-chain.xml")
 public class Timeout {
 
+    @Inject
+    @WS
+    IServiceLogger slogger;
+    
     public final static String WS_NAME = "Timeout";
     public final static String WS_SERVICE_NAME = "TimeoutService";
     public final static String WS_NAMESPACE = "http://sepro.jboss.org";
 
     @WebMethod
     public void wait(@WebParam(name = "millis") int millis) {
+        slogger.addServiceLog(getClass().getSimpleName(), "Timeout for " + millis + "ms");
         if (millis < 1) {
             return;
         } else if (millis > 60000) {

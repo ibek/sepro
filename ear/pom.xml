@@ -69,7 +69,7 @@
                     <modules><webModule>
                <groupId>org.jboss</groupId>
                <artifactId>sepro-web</artifactId>
-               <contextRoot>/sepro</contextRoot>
+               <contextRoot>/</contextRoot>
              </webModule></modules>
                     <fileNameMapping>no-version</fileNameMapping>
                 </configuration>
