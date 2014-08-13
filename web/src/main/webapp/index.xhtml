@@ -39,7 +39,7 @@
 			<header id="header">
 			<div id="logo">
 				<h2>Service Provider</h2>
-				<h4>for testing purposes</h4>
+				<h4>for testing</h4>
 			</div>
 			</header>
 			<!-- Header End -->
@@ -63,13 +63,13 @@
 						<section class="clearfix">
 						<div class="g2">
 							<div class="photo">
-								<img src="resources/images/icon.png" alt="Sunny Luthra" />
+								<img src="resources/images/icon.png" />
 							</div>
 							<div class="info">
 								<h2>Service Provider</h2>
-								<h4>for testing purposes</h4>
-								<p>SePro is a Java EE application which provides different
-									services available via various APIs. The aim is to have an
+								<h4>for testing</h4>
+								<p>SePro is a Java EE application which provides various
+									services available via remote APIs. The aim is to have an
 									infrastructure for testing remote calls without a need of mock
 									services if they are not needed.</p>
 							</div>
@@ -119,6 +119,11 @@
 									<ul>
 										<li><b>Add acronym</b> <span class="label label-blue">POST
 												#{urlRoot}/rest/acronym</span>
+											<p>
+												<code>curl -i -H 'Content-type: application/json' -d
+													'{"abbreviation":"REST", "meaning":"Representational state
+													transfer"}' -X POST #{urlRoot}/rest/acronym</code>
+											</p>
 											<p>Content:</p>
 											<ul>
 												<li><b>"application/json"</b> <code>{"abbreviation":"REST",
@@ -129,20 +134,49 @@
 											</ul></li>
 										<li><b>Get acronyms</b> <span class="label label-blue">GET
 												#{urlRoot}/rest/acronym/{abbreviation}</span>
+											<p>
+												<code>curl -i -H "Accept: application/json" -X GET
+													#{urlRoot}/rest/acronym/REST</code>
+											</p>
 											<p>Result:</p>
 											<ul>
-												<li><b>"application/json"</b> -</li>
-												<li><b>"application/xml"</b> -</li>
+												<li><b>"application/json"</b> <code>[{"abbreviation":"REST","meaning":"Representational
+														state transfer"}]</code></li>
+												<li><b>"application/xml"</b> <code>&lt;?xml
+														version="1.0" encoding="UTF-8"
+														standalone="yes"?&gt;&lt;collection
+														xmlns:sep="http://sepro.jboss.org"&gt;&lt;sep:acronym&gt;&lt;sep:abbreviation&gt;REST&lt;/sep:abbreviation&gt;&lt;sep:meaning&gt;Representational
+														state
+														transfer&lt;/sep:meaning&gt;&lt;/sep:acronym&gt;&lt;/collection&gt;</code></li>
 											</ul></li>
 										<li><b>Get dictionary</b> <span class="label label-blue">GET
-												<a href="#{urlRoot}/rest/acronym">#{urlRoot}/rest/acronym</a></span>
+												<a href="#{urlRoot}/rest/acronym">#{urlRoot}/rest/acronym</a>
+										</span>
+											<p>
+												<code>curl -i -H "Accept: application/json" -X GET
+													#{urlRoot}/rest/acronym</code>
+											</p>
 											<p>Result:</p>
 											<ul>
-												<li><b>"application/json"</b> -</li>
-												<li><b>"application/xml"</b> -</li>
+												<li><b>"application/json"</b> <code>{"map":{"REST":[{"abbreviation":"REST","meaning":"Representational
+														state transfer"}]}}</code></li>
+												<li><b>"application/xml"</b> <code>&lt;?xml
+														version="1.0" encoding="UTF-8"
+														standalone="yes"?&gt;&lt;sep:dictionary
+														xmlns:sep="http://sepro.jboss.org"&gt;&lt;sep:map&gt;&lt;entry
+														key="REST"&gt;&lt;value
+														xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+														xsi:type="sep:acronym"&gt;&lt;sep:abbreviation&gt;REST&lt;/sep:abbreviation&gt;&lt;sep:meaning&gt;Representational
+														state
+														transfer&lt;/sep:meaning&gt;&lt;/value&gt;&lt;/entry&gt;&lt;/sep:map&gt;&lt;/sep:dictionary&gt;</code></li>
 											</ul></li>
 										<li><b>Remove acronym</b> <span class="label label-blue">DELETE
 												#{urlRoot}/rest/acronym</span>
+											<p>
+												<code>curl -i -H 'Content-type: application/json' -d
+													'{"abbreviation":"REST", "meaning":"Representational state
+													transfer"}' -X DELETE #{urlRoot}/rest/acronym</code>
+											</p>
 											<p>Content:</p>
 											<ul>
 												<li><b>"application/json"</b> <code>{"abbreviation":"REST",
@@ -158,18 +192,30 @@
 									<p>Operations:</p>
 									<ul>
 										<li><b>Ping</b> <span class="label label-green">GET
-												<a href="#{urlRoot}/rest/echo/ping">#{urlRoot}/rest/echo/ping</a></span>
+												<a href="#{urlRoot}/rest/echo/ping">#{urlRoot}/rest/echo/ping</a>
+										</span>
+											<p>
+												<code>curl -i -X GET #{urlRoot}/rest/echo/ping</code>
+											</p>
 											<p>Result: pong</p></li>
 										<li><b>Complete</b> <span class="label label-green">GET
 												#{urlRoot}/rest/echo/complete/{option}</span>
+											<p>
+												<code>curl -i -X GET
+													#{urlRoot}/rest/echo/complete/hello</code>
+											</p>
 											<p>Possible options and their results:</p>
 											<ul>
 												<li>ping -&gt; pong</li>
 												<li>hello -&gt; world</li>
 												<li>ANY OTHER -&gt; default</li>
 											</ul></li>
-										<li><b>Echo</b> <span class="label label-green">GET
+										<li><b>Echo</b> <span class="label label-green">POST
 												#{urlRoot}/rest/echo</span>
+											<p>
+												<code>curl -i -H 'Content-type: application/json' -d
+													'{"a":10, "b":"none"}' -X POST #{urlRoot}/rest/echo</code>
+											</p>
 											<p>Content:</p>
 											<ul>
 												<li><b>"text/plain"</b> - ANY</li>
@@ -186,16 +232,21 @@
 								</li>
 								<li>
 									<h5>HTTP Status</h5> <span class="label label-green">#{urlRoot}/rest/status</span>
+									<p>
+										<code>curl -i -X GET #{urlRoot}/rest/status/401</code>
+									</p>
 									<p>Operations:</p>
 									<ul>
 										<li><b>Get status</b> <span class="label label-green">GET
 												#{urlRoot}/rest/status/{code}</span>
-											<p>Result: Empty HTTP Response with the given status CODE</p>
-										</li>
+											<p>Result: HTTP Response with the given status CODE</p></li>
 									</ul>
 								</li>
 								<li>
 									<h5>Timeout</h5> <span class="label label-green">#{urlRoot}/rest/timeout</span>
+									<p>
+										<code>curl -i -X GET #{urlRoot}/rest/timeout/1000</code>
+									</p>
 									<p>Operations:</p>
 									<ul>
 										<li><b>Wait</b> <span class="label label-green">GET
@@ -210,6 +261,11 @@
 									<ul>
 										<li><b>Register new user</b> <span
 											class="label label-blue">POST #{urlRoot}/rest/user</span>
+											<p>
+												<code>curl -i -H 'Content-type: application/json' -d
+													'{"username":"test","password":"test123;"}' -X POST
+													#{urlRoot}/rest/user</code>
+											</p>
 											<p>Content:</p>
 											<ul>
 												<li><b>"application/json"</b> <code>{"username":"ibek",
@@ -218,22 +274,44 @@
 														xmlns="http://sepro.jboss.org"&gt;&lt;username&gt;ibek&lt;/username&gt;&lt;password&gt;ibek123;&lt;/password&gt;&lt;/user&gt;</code></li>
 											</ul></li>
 										<li><b>Get user list</b> <span class="label label-blue">GET
-												<a href="#{urlRoot}/rest/user">#{urlRoot}/rest/user</a></span>
+												<a href="#{urlRoot}/rest/user">#{urlRoot}/rest/user</a>
+										</span>
+											<p>
+												<code>curl -i -H "Accept: application/json" -X GET
+													http://localhost:8080/sepro/rest/user</code>
+											</p>
 											<p>Result:</p>
 											<ul>
-												<li><b>"application/json"</b> -</li>
-												<li><b>"application/xml"</b> -</li>
+												<li><b>"application/json"</b> <code>[{"username":"ibek","password":"3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b"}]</code></li>
+												<li><b>"application/xml"</b> <code>&lt;?xml
+														version="1.0" encoding="UTF-8"
+														standalone="yes"?&gt;&lt;collection
+														xmlns:sep="http://sepro.jboss.org"&gt;&lt;sep:user&gt;&lt;sep:password&gt;3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b&lt;/sep:password&gt;&lt;sep:username&gt;ibek&lt;/sep:username&gt;&lt;/sep:user&gt;&lt;/collection&gt;</code></li>
 											</ul></li>
 										<li><b>Get user details</b> <span
 											class="label label-blue">GET
 												#{urlRoot}/rest/user/{username}</span>
+											<p>
+												<code>curl -i -H "Accept: application/json" -X GET
+													#{urlRoot}/rest/user/ibek</code>
+											</p>
 											<p>Result:</p>
 											<ul>
-												<li><b>"application/json"</b> -</li>
-												<li><b>"application/xml"</b> -</li>
+												<li><b>"application/json"</b> <code>{"username":"ibek","password":"3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b"}</code></li>
+												<li><b>"application/xml"</b> <code>&lt;?xml
+														version="1.0" encoding="UTF-8"
+														standalone="yes"?&gt;&lt;sep:user
+														xmlns:sep="http://sepro.jboss.org"&gt;&lt;sep:password&gt;3661d19fb31714848bc2148c2489b41897facd9f4ecb62680c79c6d4d70b870b&lt;/sep:password&gt;&lt;sep:username&gt;ibek&lt;/sep:username&gt;&lt;/sep:user&gt;</code></li>
 											</ul></li>
 										<li><b>Remove user</b> <span class="label label-blue">DELETE
 												#{urlRoot}/rest/user</span>
+											<p>
+												<code>curl -i -H 'Content-type: application/json' -d
+													'{"username":"test","password":"test123;"}' -X DELETE
+													#{urlRoot}/rest/user</code>
+											</p>
+											<p>Only a user with the role ADMIN can remove other
+												users.</p>
 											<p>Content:</p>
 											<ul>
 												<li><b>"application/json"</b> <code>{"username":"ibek",
@@ -248,6 +326,10 @@
 							<ul class="no-list work">
 								<li>
 									<h5>Basic</h5> <span class="label label-red">?security=basic</span>
+									<p>
+										<code>curl -i -u 'ibek:ibek123;' -X GET
+											#{urlRoot}/rest/echo/ping?security=basic</code>
+									</p>
 									<p>Every REST service is secured when "security" is set to
 										"basic" like #{urlRoot}/rest/echo/ping?security=basic</p>
 									<p>The users are managed by UserManagement REST service.</p>
@@ -256,6 +338,10 @@
 							<h3>Asynchronous</h3>
 							<ul class="no-list work">
 								<li><span class="label label-orange">?asynch=true</span>
+									<p>
+										<code>curl -i -X GET
+											#{urlRoot}/rest/echo/ping?asynch=true</code>
+									</p>
 									<p>Asynchronous Job Service is enable. For any asynchronous
 										REST request set "asynch" parameter to "true" like
 										#{urlRoot}/rest/echo/ping?asynch=true</p>
@@ -267,7 +353,9 @@
 						<div class="g1">
 							<div class="sidebar">
 								<h3>Logs</h3>
-								<code><h:outputText value="#{manager.restLogs}" escape="false" /></code>
+								<code>
+									<h:outputText value="#{manager.restLogs}" escape="false" />
+								</code>
 							</div>
 						</div>
 						</section>
@@ -281,23 +369,28 @@
 
 							<ul class="no-list work">
 								<li>
-									<h5>Acronyms Dictionary</h5> <span class="label label-blue"><a href="#{urlRoot}/AcronymsDictionaryService?wsdl">#{urlRoot}/AcronymsDictionaryService?wsdl</a></span>
+									<h5>Acronyms Dictionary</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/AcronymsDictionaryService?wsdl">#{urlRoot}/AcronymsDictionaryService?wsdl</a></span>
 									<p></p>
 								</li>
 								<li>
-									<h5>Echo</h5> <span class="label label-blue"><a href="#{urlRoot}/EchoService?wsdl">#{urlRoot}/EchoService?wsdl</a></span>
+									<h5>Echo</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/EchoService?wsdl">#{urlRoot}/EchoService?wsdl</a></span>
 									<p></p>
 								</li>
 								<li>
-									<h5>HTTP Status</h5> <span class="label label-blue"><a href="#{urlRoot}/HttpStatusService?wsdl">#{urlRoot}/HttpStatusService?wsdl</a></span>
+									<h5>HTTP Status</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/HttpStatusService?wsdl">#{urlRoot}/HttpStatusService?wsdl</a></span>
 									<p></p>
 								</li>
 								<li>
-									<h5>Timeout</h5> <span class="label label-blue"><a href="#{urlRoot}/TimeoutService?wsdl">#{urlRoot}/TimeoutService?wsdl</a></span>
+									<h5>Timeout</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/TimeoutService?wsdl">#{urlRoot}/TimeoutService?wsdl</a></span>
 									<p></p>
 								</li>
 								<li>
-									<h5>User Management</h5> <span class="label label-blue"><a href="#{urlRoot}/UserManagementService?wsdl">#{urlRoot}/UserManagementService?wsdl</a></span>
+									<h5>User Management</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/UserManagementService?wsdl">#{urlRoot}/UserManagementService?wsdl</a></span>
 									<p></p>
 								</li>
 							</ul>
@@ -318,9 +411,47 @@
 										authenticated according to the credentials. For a password the
 										both types can be used:</p>
 									<ul>
-										<li>PasswordText(plaintext)</li>
+										<li>PasswordText(plaintext) <code>&lt;soapenv:Envelope
+												xmlns:sep="http://sepro.jboss.org"
+												xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+												&lt;soapenv:Header&gt; &lt;wsse:Security
+												soapenv:mustUnderstand="1"
+												xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+												xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"&gt;
+												&lt;wsse:UsernameToken wsu:Id="UsernameToken-3"&gt;
+												&lt;wsse:Username&gt;ibek&lt;/wsse:Username&gt;
+												&lt;wsse:Password
+												Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"&gt;ibek123;&lt;/wsse:Password&gt;
+												&lt;wsse:Nonce
+												EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"&gt;NUXxUJrNiuxc3dLuy8+Ihg==&lt;/wsse:Nonce&gt;
+												&lt;wsu:Created&gt;2014-08-13T09:41:52.515Z&lt;/wsu:Created&gt;
+												&lt;/wsse:UsernameToken&gt; &lt;/wsse:Security&gt;
+												&lt;/soapenv:Header&gt; &lt;soapenv:Body&gt;
+												&lt;sep:echo&gt; &lt;!--Optional:--&gt; &lt;message&gt;Hello
+												World&lt;/message&gt; &lt;/sep:echo&gt;
+												&lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;</code>
+										</li>
 										<li>PasswordDigest(hashed password Base64(SHA-1(nonce +
-											created + password)))</li>
+											created + password)))<code>&lt;soapenv:Envelope
+												xmlns:sep="http://sepro.jboss.org"
+												xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+												&lt;soapenv:Header&gt; &lt;wsse:Security
+												soapenv:mustUnderstand="1"
+												xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+												xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"&gt;
+												&lt;wsse:UsernameToken wsu:Id="UsernameToken-4"&gt;
+												&lt;wsse:Username&gt;ibek&lt;/wsse:Username&gt;
+												&lt;wsse:Password
+												Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest"&gt;uxmSFj+RXm3wiC0YtoVTi2pnkQQ=&lt;/wsse:Password&gt;
+												&lt;wsse:Nonce
+												EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"&gt;Ls0LCw4gPxPidfA3ZAxfng==&lt;/wsse:Nonce&gt;
+												&lt;wsu:Created&gt;2014-08-13T09:49:22.170Z&lt;/wsu:Created&gt;
+												&lt;/wsse:UsernameToken&gt; &lt;/wsse:Security&gt;
+												&lt;/soapenv:Header&gt; &lt;soapenv:Body&gt;
+												&lt;sep:echo&gt; &lt;!--Optional:--&gt; &lt;message&gt;Hello
+												World&lt;/message&gt; &lt;/sep:echo&gt;
+												&lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;</code>
+										</li>
 									</ul>
 								</li>
 							</ul>
@@ -329,14 +460,17 @@
 								header to determine where to send the response.</p>
 							<ul class="no-list work">
 								<li>
-									<h5>Echo</h5> <span class="label label-blue"><a href="#{urlRoot}/AsyncEchoService?wsdl">#{urlRoot}/AsyncEchoService?wsdl</a></span>
+									<h5>Echo</h5> <span class="label label-blue"><a
+										href="#{urlRoot}/AsyncEchoService?wsdl">#{urlRoot}/AsyncEchoService?wsdl</a></span>
 								</li>
 							</ul>
 						</div>
 						<div class="g1">
 							<div class="sidebar">
 								<h3>Logs</h3>
-								<code><h:outputText value="#{manager.wsLogs}" escape="false" /></code>
+								<code>
+									<h:outputText value="#{manager.wsLogs}" escape="false" />
+								</code>
 							</div>
 						</div>
 						</section>
@@ -347,10 +481,12 @@
 						<section class="clearfix">
 						<div class="g2">
 							<h3>JMS Services</h3>
-							
-							<p>Remote address to connect: remote://#{manager.IPAddress}:4447</p>
-							
-							<p>Since scaling does not work now, only port-forwarding ('rhc port-forward sepro') can be used to access JMS services.</p>
+
+							<p>Remote address to connect:
+								remote://#{manager.IPAddress}:4447</p>
+
+							<p>Since scaling does not work now, only port-forwarding
+								('rhc port-forward sepro') can be used to access JMS services.</p>
 
 							<ul class="no-list work">
 								<li>
@@ -362,15 +498,20 @@
 									<p>Response topic: "topic/EchoResponse"</p>
 								</li>
 							</ul>
-							
+
 							<h3>Security and Connection</h3>
-							<p>Add a new user via ./eap6/bin/add_user.sh script and put the following user into the group "guest" for the default settings.</p>
-							<p>Username: ibek &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password: ibek1234;</p>
+							<p>Add a new user via ./eap6/bin/add_user.sh script and put
+								the following user into the group "guest" for the default
+								settings.</p>
+							<p>Username: ibek &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password:
+								ibek1234;</p>
 						</div>
 						<div class="g1">
 							<div class="sidebar">
 								<h3>Logs</h3>
-								<code><h:outputText value="#{manager.jmsLogs}" escape="false" /></code>
+								<code>
+									<h:outputText value="#{manager.jmsLogs}" escape="false" />
+								</code>
 							</div>
 						</div>
 						</section>

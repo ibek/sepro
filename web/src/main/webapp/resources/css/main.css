@@ -35,7 +35,7 @@ p {text-align:justify;text-justify:inter-word;}
 /* CODE */
 pre {white-space: pre; white-space: pre-wrap; word-wrap: break-word} /* Allow line wrapping of 'pre' */
 pre, code, kbd, samp {font-size: 1em; line-height: 1.5em; margin-bottom: 1.5em; font-family: Menlo, Consolas, 'DejaVu Sans Mono', Monaco, monospace}
-code {display: block;}
+code {display: block; text-align: left !important; font-style: italic; background: white;}
 
 /* TABLES */
 table {border-collapse: collapse; border-spacing: 0; margin-bottom: 1.5em}
@@ -176,12 +176,8 @@ body {width: 92%; margin: 0 auto} /* Center page without wrapper */
   text-align: center;
   display: none;
 }
-#header h2{
-  background-color: #fff;
-}
 #header h4{
   margin-bottom:0px; 
-  background-color: #fff;
 }
 #header .visible{
   opacity: 1;
@@ -198,7 +194,7 @@ body {width: 92%; margin: 0 auto} /* Center page without wrapper */
 }
 #tab-data-wrap{
   padding: 30px 20px;
-  background: #fff;
+  background: rgba(230, 230, 230,.8);
   border: 1px solid #f1f1f1;
   box-shadow: 0px 6px #c0392b;
   border-radius: 0px 0px 4px 4px;
@@ -346,6 +342,7 @@ body {width: 92%; margin: 0 auto} /* Center page without wrapper */
 .work li{
   border-bottom: 1px solid #f1f1f1;
   margin-bottom: 2em;
+  background: #eee;
 }
 .work li span{
   float: right;
@@ -682,10 +679,15 @@ Change widths as necessary
    padding-left: 20px;
    border-left: 1px solid #f1f1f1;
    overflow:auto;
-   white-space: nowrap;
+   background: #eee;
+ }
+ .sidebar code {
+   background: none;
  }
  /* COLUMN GRID */
  .g1,.g2,.g3 {display:inline; float: left}
+ 
+ .g2 {overflow:hidden;}
 
  /* 2 COLUMN GRID */
  .g1 {width:48.0%}

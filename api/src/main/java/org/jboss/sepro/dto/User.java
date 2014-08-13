@@ -21,6 +21,8 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @SuppressWarnings("serial")
 @XmlRootElement(name = "user", namespace = "http://sepro.jboss.org")
 public class User implements Serializable {
@@ -29,7 +31,6 @@ public class User implements Serializable {
 
     private String password;
 
-    @XmlTransient
     private String plainPassword;
 
     public User() {
@@ -88,6 +89,8 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public String getPlainPassword() {
         return plainPassword;
     }

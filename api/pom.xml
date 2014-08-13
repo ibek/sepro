@@ -26,6 +26,14 @@
 
   <name>Service Provider API</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
   <url>http://jboss.org/jbossas</url>
   <licenses>
     <license>
