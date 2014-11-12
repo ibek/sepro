@@ -99,4 +99,18 @@ public class User implements Serializable {
         this.plainPassword = plainPassword;
     }
 
+    @XmlTransient
+    @JsonIgnore
+    public boolean isSet() {
+        return username != null && !username.isEmpty();
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public void setUser(User user) {
+        this.username = user.username;
+        this.password = user.password;
+        this.plainPassword = user.plainPassword;
+    }
+
 }

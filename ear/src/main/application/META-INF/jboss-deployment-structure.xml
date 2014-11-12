@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-deployment-structure>
-  <!-- Make sub deployments isolated by default, so they cannot see each others classes without a Class-Path entry -->
-  <ear-subdeployments-isolated>true</ear-subdeployments-isolated>
+  <!-- Isolation is set to false so the web module can use beans from the ejb module. -->
+  <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
   
   <sub-deployment name="sepro-web.war">
     <dependencies>

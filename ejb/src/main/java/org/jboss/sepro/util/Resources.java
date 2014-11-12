@@ -19,14 +19,17 @@ package org.jboss.sepro.util;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.sepro.dto.User;
 import org.jboss.sepro.service.IServiceLogger;
 import org.jboss.sepro.service.impl.ServiceLogger;
 import org.jboss.sepro.stereotype.JMS;
+import org.jboss.sepro.stereotype.LoggedIn;
 import org.jboss.sepro.stereotype.REST;
 import org.jboss.sepro.stereotype.WS;
 
@@ -42,6 +45,8 @@ public class Resources {
     @Produces
     @PersistenceContext
     private EntityManager em;
+    
+    private User loggedUser = new User();
 
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
@@ -67,6 +72,13 @@ public class Resources {
     @ApplicationScoped
     public IServiceLogger getJMSLogger() {
         return new ServiceLogger();
+    }
+
+    @Produces
+    @LoggedIn
+    @RequestScoped
+    public User getLoggedUser() {
+        return loggedUser;
     }
 
 }

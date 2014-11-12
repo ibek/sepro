@@ -32,7 +32,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 import org.jboss.resteasy.util.Base64;
 import org.jboss.sepro.dto.User;
 import org.jboss.sepro.service.IUserRegistration;
-import org.jboss.sepro.service.producer.SecurityProducer;
+import org.jboss.sepro.stereotype.LoggedIn;
 import org.jboss.sepro.util.HashTool;
 
 public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
@@ -41,7 +41,8 @@ public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
     IUserRegistration userRegistration;
 
     @Inject
-    SecurityProducer securityProducer;
+    @LoggedIn
+    User loggedUser;
 
     @Override
     public final void close(MessageContext context) {
@@ -120,7 +121,7 @@ public class BasicSecurityHandler implements SOAPHandler<SOAPMessageContext> {
             context.put(MessageContext.HTTP_RESPONSE_CODE, 401);
             return false;
         }
-        securityProducer.setLoggedUser(user);
+        loggedUser.setUser(user);
 
         return true;
     }

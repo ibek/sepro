@@ -38,7 +38,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.jboss.sepro.dto.User;
 import org.jboss.sepro.service.IUserRegistration;
-import org.jboss.sepro.service.producer.SecurityProducer;
+import org.jboss.sepro.stereotype.LoggedIn;
 import org.jboss.sepro.util.HashTool;
 
 public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
@@ -55,7 +55,8 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
     IUserRegistration userRegistration;
 
     @Inject
-    SecurityProducer securityProducer;
+    @LoggedIn
+    User loggedUser;
 
     @Override
     public void close(MessageContext arg0) {
@@ -100,7 +101,7 @@ public class WSSecurityHandler implements SOAPHandler<SOAPMessageContext> {
                     } else if (!user.getPassword().equals(entry.getValue())) {
                         return breakHandlerChain(context);
                     }
-                    securityProducer.setLoggedUser(user);
+                    loggedUser.setUser(user);
                 }
             }
         } catch (SOAPException | IOException | NoSuchAlgorithmException ex) {

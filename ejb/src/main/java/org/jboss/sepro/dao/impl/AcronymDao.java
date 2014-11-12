@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -48,12 +47,11 @@ public class AcronymDao implements IAcronymDao {
 
     @Inject
     @LoggedIn
-    @Any
     User user;
 
     @Override
     public void addAcronym(MAcronym acronym) throws DuplicateException {
-        if (user != null) {
+        if (user.isSet()) {
             acronym.setOwner(user.getUsername());
         }
         log.info("Adding " + acronym);
@@ -80,7 +78,7 @@ public class AcronymDao implements IAcronymDao {
         Predicate ap = cb.equal(cb.lower(acronyms.get(MAcronym_.abbreviation)), abbreviation.trim().toLowerCase());
         Predicate mp = cb.equal(acronyms.get(MAcronym_.meaning), meaning);
         Predicate op;
-        if (user != null) {
+        if (user.isSet()) {
             op = cb.equal(acronyms.get(MAcronym_.owner), user.getUsername());
         } else {
             op = cb.isNull(acronyms.get(MAcronym_.owner));
@@ -103,7 +101,7 @@ public class AcronymDao implements IAcronymDao {
 
         Predicate ap = cb.equal(cb.lower(acronyms.get(MAcronym_.abbreviation)), abbreviation.trim().toLowerCase());
         Predicate op;
-        if (user != null) {
+        if (user.isSet()) {
             op = cb.equal(acronyms.get(MAcronym_.owner), user.getUsername());
         } else {
             op = cb.isNull(acronyms.get(MAcronym_.owner));
@@ -125,7 +123,7 @@ public class AcronymDao implements IAcronymDao {
 
         Predicate ap = cb.equal(cb.lower(acronyms.get(MAcronym_.abbreviation)), abbreviation.trim().toLowerCase());
         Predicate op;
-        if (user != null) {
+        if (user.isSet()) {
             op = cb.equal(acronyms.get(MAcronym_.owner), user.getUsername());
         } else {
             op = cb.isNull(acronyms.get(MAcronym_.owner));
@@ -139,7 +137,7 @@ public class AcronymDao implements IAcronymDao {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<MAcronym> cq = cb.createQuery(MAcronym.class);
         Root<MAcronym> acronyms = cq.from(MAcronym.class);
-        if (user != null) {
+        if (user.isSet()) {
             cq.where(cb.equal(acronyms.get(MAcronym_.owner), user.getUsername()));
         } else {
             cq.where(cb.isNull(acronyms.get(MAcronym_.owner)));

@@ -41,7 +41,7 @@ import org.jboss.resteasy.util.Base64;
 import org.jboss.sepro.dto.User;
 import org.jboss.sepro.service.IServiceLogger;
 import org.jboss.sepro.service.IUserRegistration;
-import org.jboss.sepro.service.producer.SecurityProducer;
+import org.jboss.sepro.stereotype.LoggedIn;
 import org.jboss.sepro.stereotype.REST;
 import org.jboss.sepro.util.HashTool;
 
@@ -83,7 +83,8 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
     IUserRegistration userRegistration;
 
     @Inject
-    SecurityProducer securityProducer;
+    @LoggedIn
+    User loggedUser;
 
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod methodInvoked) throws Failure,
@@ -142,11 +143,11 @@ public class BasicSecurityInterceptor implements PreProcessInterceptor {
         // Verifying Username and password
         User user = userRegistration.getUser(username);
         System.out.println(user);
-        if (user == null || !user.getPassword().equals(password)) {
+        if (!user.isSet() || !user.getPassword().equals(password)) {
             slogger.addServiceLog("BasicSecurity", "Access denied for " + username);
             return ACCESS_DENIED;
         }
-        securityProducer.setLoggedUser(user);
+        loggedUser.setUser(user);
 
         // Return null to continue request processing
         return null;

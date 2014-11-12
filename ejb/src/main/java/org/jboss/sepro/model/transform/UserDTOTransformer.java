@@ -31,10 +31,10 @@ public class UserDTOTransformer implements IDTOTransformer<MUser, User> {
 
     @Override
     public User transformTo(MUser model) {
-        if (model == null) {
-            return null;
-        }
         User dto = new User();
+        if (model == null) {
+            return dto;
+        }
         dto.setUsername(model.getUsername());
         dto.setPassword(model.getPassword());
         dto.setPlainPassword(model.getPlainPassword());
