@@ -208,4 +208,11 @@
         </profile>
   </profiles>
 
+  <repositories>
+    <repository>
+      <id>red-hat-enterprise-repository</id>
+      <url>https://maven.repository.redhat.com/techpreview/all/</url>
+    </repository>
+  </repositories>
+
 </project>
