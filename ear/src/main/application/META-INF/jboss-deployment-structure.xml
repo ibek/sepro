@@ -3,16 +3,4 @@
   <!-- Isolation is set to false so the web module can use beans from the ejb module. -->
   <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
   
-  <sub-deployment name="sepro-web.war">
-    <dependencies>
-      <module name="org.apache.cxf.impl" export="true"/>
-    </dependencies>
-  </sub-deployment>
-  
-  <sub-deployment name="sepro-ejb.jar">
-    <dependencies>
-      <module name="org.apache.commons.codec" export="true"/>
-    </dependencies>
-  </sub-deployment>
-  
 </jboss-deployment-structure>
